@@ -75,12 +75,9 @@ helper is running.
 
 ### Setup
 
-1. **Create a virtual MIDI port**
-   - **macOS:** open *Audio MIDI Setup* → *Window → Show MIDI Studio* → double-click *IAC Driver* →
-     tick *Device is online* → *Apply*.
-   - **Windows:** install the free [loopMIDI](https://www.tobias-erichsen.de/software/loopmidi.html)
-     and create a port.
-   - **Linux:** the *Midi Through* port is usually available already.
+1. **Create a virtual MIDI port** (once per computer, see
+   [Activating the virtual MIDI port](#activating-the-virtual-midi-port) below).
+   Restart Mixxx afterwards, because Mixxx only detects MIDI ports on startup.
 2. **Copy the helper** from the `controllers` folder of this repository
    (`TwinDeck-Classic-Helper.midi.xml` and `TwinDeck-Classic-Helper.js`) into the Mixxx
    controllers folder:
@@ -93,10 +90,53 @@ helper is running.
    | Linux | `~/.mixxx/controllers/` |
 
    Create the folder if it does not exist.
-3. **Enable it in Mixxx:** *Preferences → Controllers →* your virtual port (e.g. *IAC Driver Bus 1*)
+3. **Enable it in Mixxx:** *Preferences → Controllers →* your virtual port (*IAC Driver Bus 1*,
+   your loopMIDI port or *Midi Through Port-0*)
    → select the mapping **TwinDeck Classic Helper** → tick *Enabled* → *OK*.
 
 The **DAUER** slider below the transition buttons appears as soon as the helper is running.
+
+### Activating the virtual MIDI port
+
+#### macOS – IAC Driver (built in)
+
+1. Open **Audio MIDI Setup** (Spotlight: *Audio MIDI Setup*, or *Applications → Utilities*).
+2. Choose **Window → Show MIDI Studio** (⌘2).
+3. Double-click **IAC Driver**.
+4. Tick **Device is online**. A port called *Bus 1* is already there; you do not need more.
+5. Click **Apply** and close the window.
+
+The setting survives restarts. In Mixxx the port appears as **IAC Driver Bus 1**
+(on a German system: *IAC-Treiber Bus 1*).
+
+#### Windows – loopMIDI (free)
+
+Windows has no built-in virtual MIDI port, so a small tool is needed:
+
+1. Download and install [loopMIDI](https://www.tobias-erichsen.de/software/loopmidi.html).
+2. Start loopMIDI, enter a name (e.g. `TwinDeck`) under *New port-name* and click **+**.
+3. Right-click the loopMIDI icon in the system tray and enable **Autostart loopMIDI**,
+   so the port exists before Mixxx starts.
+
+In Mixxx the port appears under the name you chose (e.g. **TwinDeck**).
+
+#### Linux – Midi Through (ALSA)
+
+Most distributions already provide the port **Midi Through Port-0** via the kernel module
+`snd-seq-dummy`. Check with:
+
+```
+aconnect -l
+```
+
+If *Midi Through* is missing, load the module and make it permanent:
+
+```
+sudo modprobe snd-seq-dummy
+echo snd-seq-dummy | sudo tee /etc/modules-load.d/snd-seq-dummy.conf
+```
+
+In Mixxx the port appears as **Midi Through Port-0**.
 
 ## Requirements
 
