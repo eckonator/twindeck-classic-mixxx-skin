@@ -49,6 +49,13 @@ no four decks: just what you actually need to play a set.
 
    If the `skins` folder does not exist yet, simply create it.
 3. Start Mixxx → **Preferences → Interface → Skin → TwinDeck Classic**.
+4. *Optional:* for the vinyl brake, soft start and the timed FADE, also set up the
+   [TwinDeck Classic Helper](#optional-twindeck-classic-helper-vinyl-brake--timed-fade).
+   The `controllers` folder inside the skin folder is **not** loaded by Mixxx – the helper needs its
+   own setup steps.
+
+When updating, copy the skin files again and, if the helper files changed, also copy them to the
+controllers folder (see below) and restart Mixxx.
 
 ## Quick guide
 
@@ -89,12 +96,28 @@ helper is running.
    | macOS (self-built / Homebrew) | `~/Library/Application Support/Mixxx/controllers/` |
    | Linux | `~/.mixxx/controllers/` |
 
-   Create the folder if it does not exist.
+   Create the folder if it does not exist. Copying the skin into the skins folder is not enough –
+   Mixxx only looks for mappings in this controllers folder.
+   If Mixxx was running while you copied the files, restart it so the mapping shows up.
 3. **Enable it in Mixxx:** *Preferences → Controllers →* your virtual port (*IAC Driver Bus 1*,
    your loopMIDI port or *Midi Through Port-0*)
    → select the mapping **TwinDeck Classic Helper** → tick *Enabled* → *OK*.
 
 The **DAUER** slider below the transition buttons appears as soon as the helper is running.
+
+### Troubleshooting
+
+If the **DAUER** slider is missing, or ▶ ❚❚ / ■ stop without braking, the helper is not running:
+
+1. **Is the virtual port online?** On macOS check *Audio MIDI Setup → MIDI Studio → IAC Driver →
+   Device is online*. Restart Mixxx after changing it.
+2. **Are the helper files in the controllers folder** (not only in the skin folder)? Both the
+   `.midi.xml` and the `.js` file are needed.
+3. **Is the mapping enabled?** *Preferences → Controllers →* your virtual port: mapping
+   **TwinDeck Classic Helper** selected and *Enabled* ticked.
+4. **Check the log.** Search `mixxx.log` (in the Mixxx settings folder, next to `skins` and
+   `controllers`) for `TwinDeck` or the port name to see whether the script was loaded or reported
+   an error.
 
 ### Activating the virtual MIDI port
 
