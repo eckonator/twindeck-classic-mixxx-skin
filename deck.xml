@@ -79,7 +79,7 @@
         </Connection>
         <Children>
           <!-- Titel und Interpret: bei schmalem LCD zweizeilig (Titel, darunter
-               Interpret), ab 560 Punkten Breite einzeilig "Titel – Interpret".
+               Interpret), ab 560 Punkten Breite einzeilig: Titel links, Interpret rechts.
                Mixxx wählt die passende Variante selbst (SizeAwareStack). -->
           <SizeAwareStack>
             <SizePolicy>me,f</SizePolicy>
@@ -93,7 +93,7 @@
                   <TrackProperty>
                     <ObjectName>LcdTitle</ObjectName>
                     <MinimumSize>30,0</MinimumSize>
-                    <Style>QLabel { font-size: 22px; font-weight: bold; color: #9fe6ff; padding: 4px 8px 0px 8px; }</Style>
+                    <Style>QLabel { font-size: 22px; font-weight: bold; color: #9fe6ff; padding: 4px 8px 0px 5px; }</Style>
                     <TooltipId>track_title</TooltipId>
                     <Channel><Variable name="channum"/></Channel>
                     <Property>title</Property>
@@ -104,7 +104,7 @@
                   <TrackProperty>
                     <ObjectName>LcdArtist</ObjectName>
                     <MinimumSize>30,0</MinimumSize>
-                    <Style>QLabel { font-size: 18px; font-weight: bold; color: #7cc8e8; padding: 0px 8px 2px 8px; }</Style>
+                    <Style>QLabel { font-size: 18px; font-weight: bold; color: #7cc8e8; padding: 0px 8px 2px 7px; }</Style>
                     <TooltipId>track_artist</TooltipId>
                     <Channel><Variable name="channum"/></Channel>
                     <Property>artist</Property>
@@ -139,7 +139,7 @@
                       </TrackProperty>
                       <TrackProperty>
                         <ObjectName>LcdDetailYear</ObjectName>
-                        <Style>QLabel { font-size: 14px; color: #3f9cc4; padding-right: 8px; }</Style>
+                        <Style>QLabel { font-size: 14px; color: #3f9cc4; padding-right: 8px; qproperty-alignment: 'AlignRight | AlignVCenter'; }</Style>
                         <Tooltip>Jahr</Tooltip>
                         <Channel><Variable name="channum"/></Channel>
                         <Property>year</Property>
@@ -158,26 +158,22 @@
                     <Size>0me,34f</Size>
                     <Layout>horizontal</Layout>
                     <Children>
+                      <!-- Titel links, Interpret rechtsbündig; beide teilen sich die Breite fest,
+                           unabhängig von der Textlänge (sonst kann Mixxx den Titel wegkürzen). -->
                       <TrackProperty>
                         <ObjectName>LcdTitle</ObjectName>
                         <MinimumSize>30,0</MinimumSize>
-                        <Style>QLabel { font-size: 22px; font-weight: bold; color: #9fe6ff; padding: 4px 0px 2px 8px; }</Style>
+                        <Style>QLabel { font-size: 22px; font-weight: bold; color: #9fe6ff; padding: 4px 6px 2px 5px; }</Style>
                         <TooltipId>track_title</TooltipId>
                         <Channel><Variable name="channum"/></Channel>
                         <Property>title</Property>
-                        <SizePolicy>max,f</SizePolicy>
+                        <SizePolicy>me,f</SizePolicy>
                         <Elide>right</Elide>
                       </TrackProperty>
-                      <Label>
-                        <ObjectName>LcdTitleSep</ObjectName>
-                        <Style>QLabel { font-size: 22px; font-weight: bold; color: #9fe6ff; color: #3f86a8; padding: 4px 6px 2px 6px; }</Style>
-                        <SizePolicy>min,f</SizePolicy>
-                        <Text>–</Text>
-                      </Label>
                       <TrackProperty>
                         <ObjectName>LcdArtist</ObjectName>
                         <MinimumSize>30,0</MinimumSize>
-                        <Style>QLabel { font-size: 22px; font-weight: bold; color: #9fe6ff; padding: 4px 8px 2px 0px; }</Style>
+                        <Style>QLabel { font-size: 18px; font-weight: bold; color: #7cc8e8; padding: 4px 8px 2px 6px; qproperty-alignment: 'AlignRight | AlignVCenter'; }</Style>
                         <TooltipId>track_artist</TooltipId>
                         <Channel><Variable name="channum"/></Channel>
                         <Property>artist</Property>
@@ -213,7 +209,7 @@
                       </TrackProperty>
                       <TrackProperty>
                         <ObjectName>LcdDetailYear</ObjectName>
-                        <Style>QLabel { font-size: 14px; color: #3f9cc4; padding-right: 8px; }</Style>
+                        <Style>QLabel { font-size: 14px; color: #3f9cc4; padding-right: 8px; qproperty-alignment: 'AlignRight | AlignVCenter'; }</Style>
                         <Tooltip>Jahr</Tooltip>
                         <Channel><Variable name="channum"/></Channel>
                         <Property>year</Property>
