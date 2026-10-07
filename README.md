@@ -4,7 +4,7 @@ A lean skin for [Mixxx](https://mixxx.org) 2.5 in the style of classic early-200
 two players, a mixer with automix in the middle and the library below. No effect rack, no samplers,
 no four decks: just what you actually need to play a set.
 
-![TwinDeck Classic](docs/screenshot.png)
+![TwinDeck Classic](skin_preview.png)
 
 ## Features
 
