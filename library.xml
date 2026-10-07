@@ -7,12 +7,15 @@
     <Children>
       <Splitter>
         <SizePolicy>me,me</SizePolicy>
-        <SplitSizes>1,4</SplitSizes>
-        <Collapsible>1,0</Collapsible>
-        <SplitSizesConfigKey>[Skin],librarySidebar_splitsize</SplitSizesConfigKey>
+        <!-- Startbreiten in Pixeln; Seitenleiste kann nicht zuklappen.
+             Eigener Schlüssel, damit andere Skins die Breite nicht überschreiben. -->
+        <SplitSizes>260,1000</SplitSizes>
+        <Collapsible>0,0</Collapsible>
+        <SplitSizesConfigKey>[Skin],twindeck_sidebar_splitsize</SplitSizesConfigKey>
         <Children>
           <WidgetGroup>
-            <SizePolicy>i,min</SizePolicy>
+            <SizePolicy>min,me</SizePolicy>
+            <MinimumSize>180,100</MinimumSize>
             <Layout>vertical</Layout>
             <Children>
               <Label>
