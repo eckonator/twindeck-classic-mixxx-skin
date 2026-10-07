@@ -7,6 +7,8 @@
       <stop offset="0" stop-color="#ffffff" stop-opacity="0.10"/><stop offset="0.5" stop-color="#ffffff" stop-opacity="0"/><stop offset="1" stop-color="#ffffff" stop-opacity="0.06"/>
     </linearGradient>
   </defs>
+  <!-- quadratischer Hintergrund in LCD-Farbe: überdeckt das fest schwarze OpenGL-Feld -->
+  <rect x="0" y="0" width="120" height="120" fill="#0a1c2c"/>
   <circle cx="60" cy="60" r="59" fill="url(#v)" stroke="#3a4552" stroke-width="1"/>
   <g fill="none" stroke="#232a33" stroke-width="0.6">
     <circle cx="60" cy="60" r="54"/><circle cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="46"/>

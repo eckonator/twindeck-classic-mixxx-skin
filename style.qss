@@ -72,7 +72,7 @@ QToolTip {
 
 /* ---------- LCD-Anzeige ---------- */
 #Lcd {
-  background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #0d2233, stop:1 #071521);
+  background-color: #0a1c2c; /* einfarbig, passend zum Hintergrund der Schallplatte */
   border: 2px solid #0b0f14;
   border-radius: 3px;
   margin-top: 2px;
@@ -446,4 +446,11 @@ WPushButton:disabled {
   background-color: #232a32;
   border: 1px solid #1a2028;
   border-bottom: 3px solid #1a2028;
+}
+
+/* Trennlinie im LCD über der BPM/PITCH/KEY-Zeile */
+#LcdDivider {
+  background-color: #1f4a63;
+  margin-left: 6px;
+  margin-right: 6px;
 }

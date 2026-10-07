@@ -9,69 +9,111 @@
     <Children>
       <WidgetGroup>
         <Layout>horizontal</Layout>
-        <Size>236f,22f</Size>
+        <Size>0me,28f</Size>
         <Children>
+          <!-- Gegengewicht zur Uhr, damit MIXER mittig steht -->
+          <WidgetGroup><Size>52f,28f</Size></WidgetGroup>
           <Label>
             <ObjectName>PanelCaption</ObjectName>
             <SizePolicy>me,f</SizePolicy>
+            <Size>0me,28f</Size>
             <Text>MIXER</Text>
           </Label>
           <Time>
             <ObjectName>Clock</ObjectName>
             <TooltipId>time</TooltipId>
-            <Size>64f,22f</Size>
+            <Size>52f,28f</Size>
           </Time>
         </Children>
       </WidgetGroup>
 
-      <!-- Kanalfader mit Pegelanzeigen -->
+      <!-- Kanalfader mit Pegelanzeigen; jede Spalte trägt ihre Beschriftung -->
       <WidgetGroup>
         <ObjectName>FaderArea</ObjectName>
         <SizePolicy>me,me</SizePolicy>
         <Layout>horizontal</Layout>
         <Children>
           <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
-          <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Channel1],vu_meter</SetVariable></Template>
-          <SliderComposed>
-            <TooltipId>channel_volume</TooltipId>
-            <Size>34f,0me</Size>
-            <Slider scalemode="STRETCH">skin:graphics/fader_track.svg</Slider>
-            <Handle scalemode="STRETCH_ASPECT">skin:graphics/fader_handle.svg</Handle>
-            <Horizontal>false</Horizontal>
-            <Connection><ConfigKey>[Channel1],volume</ConfigKey></Connection>
-          </SliderComposed>
+          <WidgetGroup>
+            <Size>58f,0me</Size>
+            <Layout>vertical</Layout>
+            <Children>
+              <WidgetGroup>
+                <SizePolicy>me,me</SizePolicy>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                  <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Channel1],vu_meter</SetVariable></Template>
+                  <WidgetGroup><Size>4f,1f</Size></WidgetGroup>
+                  <SliderComposed>
+                    <TooltipId>channel_volume</TooltipId>
+                    <Size>34f,0me</Size>
+                    <Slider scalemode="STRETCH">skin:graphics/fader_track.svg</Slider>
+                    <Handle scalemode="STRETCH_ASPECT">skin:graphics/fader_handle.svg</Handle>
+                    <Horizontal>false</Horizontal>
+                    <Connection><ConfigKey>[Channel1],volume</ConfigKey></Connection>
+                  </SliderComposed>
+                  <WidgetGroup><Size>12f,1f</Size></WidgetGroup>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                </Children>
+              </WidgetGroup>
+              <Label><ObjectName>FaderLabel</ObjectName><Size>0me,16f</Size><Text>A</Text></Label>
+            </Children>
+          </WidgetGroup>
           <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
-          <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Main],vu_meter_left</SetVariable></Template>
-          <WidgetGroup><Size>3f,1f</Size></WidgetGroup>
-          <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Main],vu_meter_right</SetVariable></Template>
+          <WidgetGroup>
+            <Size>40f,0me</Size>
+            <Layout>vertical</Layout>
+            <Children>
+              <WidgetGroup>
+                <SizePolicy>me,me</SizePolicy>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                  <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Main],vu_meter_left</SetVariable></Template>
+                  <WidgetGroup><Size>3f,1f</Size></WidgetGroup>
+                  <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Main],vu_meter_right</SetVariable></Template>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                </Children>
+              </WidgetGroup>
+              <Label><ObjectName>FaderLabel</ObjectName><Size>0me,16f</Size><Text>MAIN</Text></Label>
+            </Children>
+          </WidgetGroup>
           <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
-          <SliderComposed>
-            <TooltipId>channel_volume</TooltipId>
-            <Size>34f,0me</Size>
-            <Slider scalemode="STRETCH">skin:graphics/fader_track.svg</Slider>
-            <Handle scalemode="STRETCH_ASPECT">skin:graphics/fader_handle.svg</Handle>
-            <Horizontal>false</Horizontal>
-            <Connection><ConfigKey>[Channel2],volume</ConfigKey></Connection>
-          </SliderComposed>
-          <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Channel2],vu_meter</SetVariable></Template>
+          <WidgetGroup>
+            <Size>58f,0me</Size>
+            <Layout>vertical</Layout>
+            <Children>
+              <WidgetGroup>
+                <SizePolicy>me,me</SizePolicy>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                  <WidgetGroup><Size>12f,1f</Size></WidgetGroup>
+                  <SliderComposed>
+                    <TooltipId>channel_volume</TooltipId>
+                    <Size>34f,0me</Size>
+                    <Slider scalemode="STRETCH">skin:graphics/fader_track.svg</Slider>
+                    <Handle scalemode="STRETCH_ASPECT">skin:graphics/fader_handle.svg</Handle>
+                    <Horizontal>false</Horizontal>
+                    <Connection><ConfigKey>[Channel2],volume</ConfigKey></Connection>
+                  </SliderComposed>
+                  <WidgetGroup><Size>4f,1f</Size></WidgetGroup>
+                  <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Channel2],vu_meter</SetVariable></Template>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                </Children>
+              </WidgetGroup>
+              <Label><ObjectName>FaderLabel</ObjectName><Size>0me,16f</Size><Text>B</Text></Label>
+            </Children>
+          </WidgetGroup>
           <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
-        </Children>
-      </WidgetGroup>
-
-      <WidgetGroup>
-        <Layout>horizontal</Layout>
-        <Size>236f,16f</Size>
-        <Children>
-          <Label><ObjectName>FaderLabel</ObjectName><SizePolicy>me,f</SizePolicy><Text>A</Text></Label>
-          <Label><ObjectName>FaderLabel</ObjectName><SizePolicy>me,f</SizePolicy><Text>MAIN</Text></Label>
-          <Label><ObjectName>FaderLabel</ObjectName><SizePolicy>me,f</SizePolicy><Text>B</Text></Label>
         </Children>
       </WidgetGroup>
 
       <!-- Crossfader -->
       <WidgetGroup>
         <Layout>horizontal</Layout>
-        <Size>236f,34f</Size>
+        <Size>0me,34f</Size>
         <Children>
           <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
           <SliderComposed>
@@ -89,7 +131,7 @@
       <!-- Master / Kopfhörer -->
       <WidgetGroup>
         <Layout>horizontal</Layout>
-        <Size>236f,58f</Size>
+        <Size>0me,58f</Size>
         <Children>
           <Template src="skin:knob.xml">
             <SetVariable name="ConfigKey">[Master],gain</SetVariable>
@@ -113,7 +155,7 @@
       <WidgetGroup>
         <ObjectName>XfadePresetBox</ObjectName>
         <Layout>horizontal</Layout>
-        <Size>236f,52f</Size>
+        <Size>0me,52f</Size>
         <Children>
           <WidgetGroup>
             <Layout>vertical</Layout>
@@ -173,7 +215,7 @@
       <WidgetGroup>
         <ObjectName>AutomixBox</ObjectName>
         <Layout>horizontal</Layout>
-        <Size>236f,34f</Size>
+        <Size>0me,34f</Size>
         <Children>
           <PushButton>
             <ObjectName>AutomixButton</ObjectName>
@@ -229,7 +271,7 @@
       <!-- Aufnahme / Bibliothek groß -->
       <WidgetGroup>
         <Layout>horizontal</Layout>
-        <Size>236f,32f</Size>
+        <Size>0me,32f</Size>
         <Children>
           <PushButton>
             <ObjectName>RecButton</ObjectName>

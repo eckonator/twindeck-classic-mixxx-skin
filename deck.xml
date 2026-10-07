@@ -23,6 +23,7 @@
           </Label>
           <TrackProperty>
             <ObjectName>DeckArtist</ObjectName>
+            <MinimumSize>30,0</MinimumSize>
             <Style>QLabel { font-size: 17px; font-weight: bold; color: #d8e2ec; padding-left: 6px; }</Style>
             <TooltipId>track_artist</TooltipId>
             <Channel><Variable name="channum"/></Channel>
@@ -64,46 +65,53 @@
         </Children>
       </WidgetGroup>
 
-      <!-- LCD-Anzeige -->
+      <!-- LCD-Anzeige: oben Cover | Titel/Details/Zeit | Schallplatte,
+           unten BPM / PITCH / KEY nebeneinander über die volle Breite -->
       <WidgetGroup>
         <ObjectName>Lcd</ObjectName>
         <SizePolicy>me,me</SizePolicy>
-        <MinimumSize>200,140</MinimumSize>
-        <Layout>horizontal</Layout>
+        <MinimumSize>200,170</MinimumSize>
+        <Layout>vertical</Layout>
         <!-- Titelende naht: LCD färbt sich rot -->
         <Connection>
           <ConfigKey><Variable name="group"/>,end_of_track</ConfigKey>
           <BindProperty>highlight</BindProperty>
         </Connection>
         <Children>
+          <!-- Interpret – Titel über die volle Breite -->
           <WidgetGroup>
-            <ObjectName>LcdCoverBox</ObjectName>
-            <Size>112f,0me</Size>
-            <Layout>vertical</Layout>
+            <ObjectName>LcdTitleRow</ObjectName>
+            <Size>0me,34f</Size>
+            <Layout>horizontal</Layout>
             <Children>
-              <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
-              <CoverArt>
-                <ObjectName>LcdCover</ObjectName>
-                <TooltipId>coverart</TooltipId>
-                <Group><Variable name="group"/></Group>
-                <Size>104f,104f</Size>
-              </CoverArt>
-              <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
+              <TrackProperty>
+                <ObjectName>LcdArtist</ObjectName>
+                <MinimumSize>30,0</MinimumSize>
+                <Style>QLabel { font-size: 22px; font-weight: bold; color: #9fe6ff; padding: 4px 0px 2px 8px; }</Style>
+                <TooltipId>track_artist</TooltipId>
+                <Channel><Variable name="channum"/></Channel>
+                <Property>artist</Property>
+                <SizePolicy>max,f</SizePolicy>
+                <Elide>right</Elide>
+              </TrackProperty>
+              <Label>
+                <ObjectName>LcdTitleSep</ObjectName>
+                <Style>QLabel { font-size: 22px; font-weight: bold; color: #9fe6ff; color: #3f86a8; padding: 4px 6px 2px 6px; }</Style>
+                <SizePolicy>min,f</SizePolicy>
+                <Text>–</Text>
+              </Label>
+              <TrackProperty>
+                <ObjectName>LcdTitle</ObjectName>
+                <MinimumSize>30,0</MinimumSize>
+                <Style>QLabel { font-size: 22px; font-weight: bold; color: #9fe6ff; padding: 4px 8px 2px 0px; }</Style>
+                <TooltipId>track_title</TooltipId>
+                <Channel><Variable name="channum"/></Channel>
+                <Property>title</Property>
+                <SizePolicy>me,f</SizePolicy>
+                <Elide>right</Elide>
+              </TrackProperty>
             </Children>
           </WidgetGroup>
-          <WidgetGroup>
-            <SizePolicy>me,me</SizePolicy>
-            <Layout>vertical</Layout>
-            <Children>
-          <TrackProperty>
-            <ObjectName>LcdTitle</ObjectName>
-            <Style>QLabel { font-size: 22px; font-weight: bold; color: #9fe6ff; padding: 4px 6px 0px 6px; }</Style>
-            <TooltipId>track_title</TooltipId>
-            <Channel><Variable name="channum"/></Channel>
-            <Property>title</Property>
-            <SizePolicy>me,f</SizePolicy>
-            <Elide>right</Elide>
-          </TrackProperty>
           <WidgetGroup>
             <ObjectName>LcdDetails</ObjectName>
             <SizePolicy>me,f</SizePolicy>
@@ -112,7 +120,8 @@
             <Children>
               <TrackProperty>
                 <ObjectName>LcdDetail</ObjectName>
-                <Style>QLabel { font-size: 14px; color: #3f9cc4; padding-left: 6px; }</Style>
+                <MinimumSize>30,0</MinimumSize>
+                <Style>QLabel { font-size: 14px; color: #3f9cc4; padding-left: 8px; }</Style>
                 <Tooltip>Album</Tooltip>
                 <Channel><Variable name="channum"/></Channel>
                 <Property>album</Property>
@@ -130,7 +139,7 @@
               </TrackProperty>
               <TrackProperty>
                 <ObjectName>LcdDetailYear</ObjectName>
-                <Style>QLabel { font-size: 14px; color: #3f9cc4; padding-right: 6px; }</Style>
+                <Style>QLabel { font-size: 14px; color: #3f9cc4; padding-right: 8px; }</Style>
                 <Tooltip>Jahr</Tooltip>
                 <Channel><Variable name="channum"/></Channel>
                 <Property>year</Property>
@@ -142,107 +151,152 @@
             <SizePolicy>me,me</SizePolicy>
             <Layout>horizontal</Layout>
             <Children>
-              <NumberPos>
-                <ObjectName>LcdTime</ObjectName>
-                <Style>QLabel { font-size: 32px; font-weight: bold; color: #5fd7ff; padding-left: 6px; }</Style>
-                <TooltipId>track_time</TooltipId>
-                <Group><Variable name="group"/></Group>
-                <SizePolicy>me,me</SizePolicy>
-                <Alignment>left</Alignment>
-              </NumberPos>
               <WidgetGroup>
-                <Size>92f,0me</Size>
+                <ObjectName>LcdCoverBox</ObjectName>
+                <Size>112f,0me</Size>
                 <Layout>vertical</Layout>
                 <Children>
-                  <WidgetGroup>
-                    <Layout>horizontal</Layout>
-                    <SizePolicy>me,me</SizePolicy>
-                    <Children>
-                      <Label>
-                        <ObjectName>LcdCaption</ObjectName>
-                        <Size>28f,0me</Size>
-                        <Text>BPM</Text>
-                      </Label>
-                      <NumberBpm>
-                        <ObjectName>LcdBpm</ObjectName>
-                        <TooltipId>visual_bpm</TooltipId>
-                        <Channel><Variable name="channum"/></Channel>
-                        <SizePolicy>me,me</SizePolicy>
-                        <Alignment>right</Alignment>
-                        <Connection>
-                          <ConfigKey><Variable name="group"/>,visual_bpm</ConfigKey>
-                        </Connection>
-                      </NumberBpm>
-                    </Children>
-                  </WidgetGroup>
-                  <WidgetGroup>
-                    <Layout>horizontal</Layout>
-                    <SizePolicy>me,me</SizePolicy>
-                    <Children>
-                      <Label>
-                        <ObjectName>LcdCaption</ObjectName>
-                        <Size>28f,0me</Size>
-                        <Text>PITCH</Text>
-                      </Label>
-                      <NumberRate>
-                        <ObjectName>LcdRate</ObjectName>
-                        <TooltipId>rate_display</TooltipId>
-                        <Channel><Variable name="channum"/></Channel>
-                        <SizePolicy>me,me</SizePolicy>
-                        <Alignment>right</Alignment>
-                        <NumberOfDigits>1</NumberOfDigits>
-                      </NumberRate>
-                    </Children>
-                  </WidgetGroup>
-                  <WidgetGroup>
-                    <Layout>horizontal</Layout>
-                    <SizePolicy>me,me</SizePolicy>
-                    <Children>
-                      <Label>
-                        <ObjectName>LcdCaption</ObjectName>
-                        <Size>28f,0me</Size>
-                        <Text>KEY</Text>
-                      </Label>
-                      <Key>
-                        <ObjectName>LcdKey</ObjectName>
-                        <TooltipId>visual_key</TooltipId>
-                        <Channel><Variable name="channum"/></Channel>
-                        <SizePolicy>me,me</SizePolicy>
-                        <Alignment>right</Alignment>
-                        <Connection>
-                          <ConfigKey><Variable name="group"/>,visual_key</ConfigKey>
-                        </Connection>
-                      </Key>
-                    </Children>
-                  </WidgetGroup>
+                  <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
+                  <CoverArt>
+                    <ObjectName>LcdCover</ObjectName>
+                    <TooltipId>coverart</TooltipId>
+                    <Group><Variable name="group"/></Group>
+                    <Size>104f,104f</Size>
+                  </CoverArt>
+                  <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
                 </Children>
+              </WidgetGroup>
+              <WidgetGroup>
+                <SizePolicy>me,me</SizePolicy>
+                <Layout>vertical</Layout>
+                <Children>
+                  <NumberPos>
+                    <ObjectName>LcdTime</ObjectName>
+                    <!-- Mixxx liefert "abgelaufen  -Rest" als einen Text. Schmales Feld +
+                         Zeilenumbruch stellt beide Zeiten untereinander. -->
+                    <Style>QLabel { font-size: 32px; font-weight: bold; color: #5fd7ff; padding-left: 10px; qproperty-wordWrap: true; }</Style>
+                    <TooltipId>track_time</TooltipId>
+                    <Group><Variable name="group"/></Group>
+                    <SizePolicy>me,me</SizePolicy>
+                    <MinimumSize>150,0</MinimumSize>
+                    <MaximumSize>230,200</MaximumSize>
+                    <Alignment>left</Alignment>
+                  </NumberPos>
+                </Children>
+              </WidgetGroup>
+              <WidgetGroup>
+                <ObjectName>SpinnyBox</ObjectName>
+                <Size>140f,0me</Size>
+                <Layout>vertical</Layout>
+                <Children>
+                  <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
+                  <Spinny>
+                    <TooltipId>spinny</TooltipId>
+                    <Size>132f,132f</Size>
+                    <Group><Variable name="group"/></Group>
+                    <PathBackground scalemode="STRETCH_ASPECT">skin:graphics/spinny_bg.svg</PathBackground>
+                    <PathMask scalemode="STRETCH_ASPECT">skin:graphics/spinny_mask.svg</PathMask>
+                    <PathForeground>skin:graphics/spinny_indicator.svg</PathForeground>
+                    <PathGhost>skin:graphics/spinny_ghost.svg</PathGhost>
+                    <ShowCoverControl>[Skin],twindeck_spinny_cover</ShowCoverControl>
+                  </Spinny>
+                  <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
+                </Children>
+                <Connection>
+                  <ConfigKey>[Skin],twindeck_show_spinny</ConfigKey>
+                  <BindProperty>visible</BindProperty>
+                </Connection>
               </WidgetGroup>
             </Children>
           </WidgetGroup>
-            </Children>
-          </WidgetGroup>
+
           <WidgetGroup>
-            <ObjectName>SpinnyBox</ObjectName>
-            <Size>140f,0me</Size>
-            <Layout>vertical</Layout>
+            <ObjectName>LcdDivider</ObjectName>
+            <Size>0me,1f</Size>
+          </WidgetGroup>
+
+          <WidgetGroup>
+            <ObjectName>LcdInfoRow</ObjectName>
+            <Size>0me,28f</Size>
+            <Layout>horizontal</Layout>
             <Children>
-              <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
-              <Spinny>
-                <TooltipId>spinny</TooltipId>
-                <Size>132f,132f</Size>
-                <Group><Variable name="group"/></Group>
-                <PathBackground scalemode="STRETCH_ASPECT">skin:graphics/spinny_bg.svg</PathBackground>
-                <PathMask scalemode="STRETCH_ASPECT">skin:graphics/spinny_mask.svg</PathMask>
-                <PathForeground>skin:graphics/spinny_indicator.svg</PathForeground>
-                <PathGhost>skin:graphics/spinny_ghost.svg</PathGhost>
-                <ShowCoverControl>[Skin],twindeck_spinny_cover</ShowCoverControl>
-              </Spinny>
-              <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
+              <WidgetGroup>
+                <ObjectName>LcdInfoCell</ObjectName>
+                <SizePolicy>me,me</SizePolicy>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                  <Label>
+                    <ObjectName>LcdCaption</ObjectName>
+                    <Style>QLabel { font-size: 11px; font-weight: bold; color: #3f86a8; padding-right: 6px; }</Style>
+                    <SizePolicy>min,me</SizePolicy>
+                    <Text>BPM</Text>
+                  </Label>
+                  <NumberBpm>
+                    <ObjectName>LcdBpm</ObjectName>
+                    <Style>QLabel { font-size: 17px; font-weight: bold; color: #5fd7ff; }</Style>
+                    <TooltipId>visual_bpm</TooltipId>
+                    <Channel><Variable name="channum"/></Channel>
+                    <SizePolicy>min,me</SizePolicy>
+                    <Alignment>left</Alignment>
+                    <Connection>
+                      <ConfigKey><Variable name="group"/>,visual_bpm</ConfigKey>
+                    </Connection>
+                  </NumberBpm>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                </Children>
+              </WidgetGroup>
+              <WidgetGroup>
+                <ObjectName>LcdInfoCell</ObjectName>
+                <SizePolicy>me,me</SizePolicy>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                  <Label>
+                    <ObjectName>LcdCaption</ObjectName>
+                    <Style>QLabel { font-size: 11px; font-weight: bold; color: #3f86a8; padding-right: 6px; }</Style>
+                    <SizePolicy>min,me</SizePolicy>
+                    <Text>PITCH</Text>
+                  </Label>
+                  <NumberRate>
+                    <ObjectName>LcdRate</ObjectName>
+                    <Style>QLabel { font-size: 17px; font-weight: bold; color: #5fd7ff; }</Style>
+                    <TooltipId>rate_display</TooltipId>
+                    <Channel><Variable name="channum"/></Channel>
+                    <SizePolicy>min,me</SizePolicy>
+                    <Alignment>left</Alignment>
+                    <NumberOfDigits>1</NumberOfDigits>
+                  </NumberRate>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                </Children>
+              </WidgetGroup>
+              <WidgetGroup>
+                <ObjectName>LcdInfoCell</ObjectName>
+                <SizePolicy>me,me</SizePolicy>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                  <Label>
+                    <ObjectName>LcdCaption</ObjectName>
+                    <Style>QLabel { font-size: 11px; font-weight: bold; color: #3f86a8; padding-right: 6px; }</Style>
+                    <SizePolicy>min,me</SizePolicy>
+                    <Text>KEY</Text>
+                  </Label>
+                  <Key>
+                    <ObjectName>LcdKey</ObjectName>
+                    <Style>QLabel { font-size: 17px; font-weight: bold; color: #5fd7ff; }</Style>
+                    <TooltipId>visual_key</TooltipId>
+                    <Channel><Variable name="channum"/></Channel>
+                    <SizePolicy>min,me</SizePolicy>
+                    <Alignment>left</Alignment>
+                    <Connection>
+                      <ConfigKey><Variable name="group"/>,visual_key</ConfigKey>
+                    </Connection>
+                  </Key>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                </Children>
+              </WidgetGroup>
             </Children>
-            <Connection>
-              <ConfigKey>[Skin],twindeck_show_spinny</ConfigKey>
-              <BindProperty>visible</BindProperty>
-            </Connection>
           </WidgetGroup>
         </Children>
       </WidgetGroup>
