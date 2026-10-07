@@ -38,30 +38,40 @@
   <Layout>vertical</Layout>
 
   <Children>
-    <WidgetGroup>
-      <ObjectName>TopSection</ObjectName>
-      <SizePolicy>me,min</SizePolicy>
-      <Size>0me,330min</Size>
-      <Layout>horizontal</Layout>
+    <!-- Verschiebbarer Trenner zwischen Playern und Archiv.
+         Startaufteilung 40 : 60, die gezogene Position merkt sich Mixxx. -->
+    <Splitter>
+      <SizePolicy>me,me</SizePolicy>
+      <Orientation>vertical</Orientation>
+      <SplitSizes>400,600</SplitSizes>
+      <Collapsible>0,0</Collapsible>
+      <SplitSizesConfigKey>[Skin],twindeck_main_splitsize</SplitSizesConfigKey>
       <Children>
-        <Template src="skin:pitch.xml">
-          <SetVariable name="channum">1</SetVariable>
-        </Template>
-        <Template src="skin:deck.xml">
-          <SetVariable name="channum">1</SetVariable>
-          <SetVariable name="letter">A</SetVariable>
-        </Template>
-        <Template src="skin:mixer.xml"/>
-        <Template src="skin:deck.xml">
-          <SetVariable name="channum">2</SetVariable>
-          <SetVariable name="letter">B</SetVariable>
-        </Template>
-        <Template src="skin:pitch.xml">
-          <SetVariable name="channum">2</SetVariable>
-        </Template>
-      </Children>
-    </WidgetGroup>
+        <WidgetGroup>
+          <ObjectName>TopSection</ObjectName>
+          <SizePolicy>me,me</SizePolicy>
+          <Layout>horizontal</Layout>
+          <Children>
+            <Template src="skin:pitch.xml">
+              <SetVariable name="channum">1</SetVariable>
+            </Template>
+            <Template src="skin:deck.xml">
+              <SetVariable name="channum">1</SetVariable>
+              <SetVariable name="letter">A</SetVariable>
+            </Template>
+            <Template src="skin:mixer.xml"/>
+            <Template src="skin:deck.xml">
+              <SetVariable name="channum">2</SetVariable>
+              <SetVariable name="letter">B</SetVariable>
+            </Template>
+            <Template src="skin:pitch.xml">
+              <SetVariable name="channum">2</SetVariable>
+            </Template>
+          </Children>
+        </WidgetGroup>
 
-    <Template src="skin:library.xml"/>
+        <Template src="skin:library.xml"/>
+      </Children>
+    </Splitter>
   </Children>
 </skin>

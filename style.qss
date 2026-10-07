@@ -454,3 +454,14 @@ WPushButton:disabled {
   margin-left: 6px;
   margin-right: 6px;
 }
+
+/* Trenner zwischen Playern und Archiv: sichtbarer Griff */
+QSplitter::handle:vertical {
+  background-color: #1b2129;
+  height: 6px;
+  border-top: 1px solid #2f3a46;
+  border-bottom: 1px solid #0b0f14;
+}
+QSplitter::handle:vertical:hover {
+  background-color: #e08a12;
+}
