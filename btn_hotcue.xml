@@ -1,0 +1,31 @@
+<!--
+  Cue-Speicher-Taste: Linksklick setzt/springt, Rechtsklick löscht.
+  Variablen: group, hotcue
+-->
+<Template>
+  <PushButton>
+    <ObjectName>HotcueButton</ObjectName>
+    <TooltipId>hotcue</TooltipId>
+    <Size>30f,24f</Size>
+    <NumberStates>3</NumberStates>
+    <State><Number>0</Number><Text><Variable name="hotcue"/></Text></State>
+    <State><Number>1</Number><Text><Variable name="hotcue"/></Text></State>
+    <State><Number>2</Number><Text><Variable name="hotcue"/></Text></State>
+    <Connection>
+      <ConfigKey><Variable name="group"/>,hotcue_<Variable name="hotcue"/>_activate</ConfigKey>
+      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+      <ButtonState>LeftButton</ButtonState>
+      <ConnectValueToWidget>false</ConnectValueToWidget>
+    </Connection>
+    <Connection>
+      <ConfigKey><Variable name="group"/>,hotcue_<Variable name="hotcue"/>_clear</ConfigKey>
+      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+      <ButtonState>RightButton</ButtonState>
+      <ConnectValueToWidget>false</ConnectValueToWidget>
+    </Connection>
+    <Connection>
+      <ConfigKey><Variable name="group"/>,hotcue_<Variable name="hotcue"/>_status</ConfigKey>
+      <ConnectValueFromWidget>false</ConnectValueFromWidget>
+    </Connection>
+  </PushButton>
+</Template>

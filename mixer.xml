@@ -1,0 +1,271 @@
+<!--
+  Mittelteil: Lautstärke, Crossfader, Master/Kopfhörer, Automix, Aufnahme.
+-->
+<Template>
+  <WidgetGroup>
+    <ObjectName>MixerPanel</ObjectName>
+    <Size>236f,0me</Size>
+    <Layout>vertical</Layout>
+    <Children>
+      <WidgetGroup>
+        <Layout>horizontal</Layout>
+        <Size>236f,22f</Size>
+        <Children>
+          <Label>
+            <ObjectName>PanelCaption</ObjectName>
+            <SizePolicy>me,f</SizePolicy>
+            <Text>MIXER</Text>
+          </Label>
+          <Time>
+            <ObjectName>Clock</ObjectName>
+            <TooltipId>time</TooltipId>
+            <Size>64f,22f</Size>
+          </Time>
+        </Children>
+      </WidgetGroup>
+
+      <!-- Kanalfader mit Pegelanzeigen -->
+      <WidgetGroup>
+        <ObjectName>FaderArea</ObjectName>
+        <SizePolicy>me,me</SizePolicy>
+        <Layout>horizontal</Layout>
+        <Children>
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+          <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Channel1],vu_meter</SetVariable></Template>
+          <SliderComposed>
+            <TooltipId>channel_volume</TooltipId>
+            <Size>34f,0me</Size>
+            <Slider scalemode="STRETCH">skin:graphics/fader_track.svg</Slider>
+            <Handle scalemode="STRETCH_ASPECT">skin:graphics/fader_handle.svg</Handle>
+            <Horizontal>false</Horizontal>
+            <Connection><ConfigKey>[Channel1],volume</ConfigKey></Connection>
+          </SliderComposed>
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+          <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Main],vu_meter_left</SetVariable></Template>
+          <WidgetGroup><Size>3f,1f</Size></WidgetGroup>
+          <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Main],vu_meter_right</SetVariable></Template>
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+          <SliderComposed>
+            <TooltipId>channel_volume</TooltipId>
+            <Size>34f,0me</Size>
+            <Slider scalemode="STRETCH">skin:graphics/fader_track.svg</Slider>
+            <Handle scalemode="STRETCH_ASPECT">skin:graphics/fader_handle.svg</Handle>
+            <Horizontal>false</Horizontal>
+            <Connection><ConfigKey>[Channel2],volume</ConfigKey></Connection>
+          </SliderComposed>
+          <Template src="skin:vu.xml"><SetVariable name="ConfigKey">[Channel2],vu_meter</SetVariable></Template>
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+        </Children>
+      </WidgetGroup>
+
+      <WidgetGroup>
+        <Layout>horizontal</Layout>
+        <Size>236f,16f</Size>
+        <Children>
+          <Label><ObjectName>FaderLabel</ObjectName><SizePolicy>me,f</SizePolicy><Text>A</Text></Label>
+          <Label><ObjectName>FaderLabel</ObjectName><SizePolicy>me,f</SizePolicy><Text>MAIN</Text></Label>
+          <Label><ObjectName>FaderLabel</ObjectName><SizePolicy>me,f</SizePolicy><Text>B</Text></Label>
+        </Children>
+      </WidgetGroup>
+
+      <!-- Crossfader -->
+      <WidgetGroup>
+        <Layout>horizontal</Layout>
+        <Size>236f,34f</Size>
+        <Children>
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+          <SliderComposed>
+            <TooltipId>crossfader</TooltipId>
+            <Size>200f,30f</Size>
+            <Slider scalemode="STRETCH">skin:graphics/xfader_track.svg</Slider>
+            <Handle scalemode="STRETCH_ASPECT">skin:graphics/xfader_handle.svg</Handle>
+            <Horizontal>true</Horizontal>
+            <Connection><ConfigKey>[Master],crossfader</ConfigKey></Connection>
+          </SliderComposed>
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+        </Children>
+      </WidgetGroup>
+
+      <!-- Master / Kopfhörer -->
+      <WidgetGroup>
+        <Layout>horizontal</Layout>
+        <Size>236f,58f</Size>
+        <Children>
+          <Template src="skin:knob.xml">
+            <SetVariable name="ConfigKey">[Master],gain</SetVariable>
+            <SetVariable name="TooltipId">main_gain</SetVariable>
+            <SetVariable name="Label">MASTER</SetVariable>
+          </Template>
+          <Template src="skin:knob.xml">
+            <SetVariable name="ConfigKey">[Master],headMix</SetVariable>
+            <SetVariable name="TooltipId">headMix</SetVariable>
+            <SetVariable name="Label">PFL MIX</SetVariable>
+          </Template>
+          <Template src="skin:knob.xml">
+            <SetVariable name="ConfigKey">[Master],headGain</SetVariable>
+            <SetVariable name="TooltipId">headphone_gain</SetVariable>
+            <SetVariable name="Label">PFL VOL</SetVariable>
+          </Template>
+        </Children>
+      </WidgetGroup>
+
+      <!-- Überblendform (Vorwahl für Crossfader und Automix) -->
+      <WidgetGroup>
+        <ObjectName>XfadePresetBox</ObjectName>
+        <Layout>horizontal</Layout>
+        <Size>236f,52f</Size>
+        <Children>
+          <WidgetGroup>
+            <Layout>vertical</Layout>
+            <SizePolicy>me,me</SizePolicy>
+            <Children>
+              <Label>
+                <ObjectName>RowCaption</ObjectName>
+                <Size>0me,14f</Size>
+                <Text>ÜBERGANG</Text>
+              </Label>
+              <WidgetGroup>
+                <Layout>horizontal</Layout>
+                <SizePolicy>me,me</SizePolicy>
+                <Children>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+          <Template src="skin:btn_xfade.xml">
+            <SetVariable name="preset">1</SetVariable>
+            <SetVariable name="icon">smooth</SetVariable>
+            <SetVariable name="Tooltip">Gleichmäßig – weiche Überblendung mit konstanter Lautstärke</SetVariable>
+            <SetVariable name="mode">1</SetVariable>
+            <SetVariable name="curve">0.000400</SetVariable>
+            <SetVariable name="calibration">0.285714</SetVariable>
+          </Template>
+          <Template src="skin:btn_xfade.xml">
+            <SetVariable name="preset">2</SetVariable>
+            <SetVariable name="icon">overlap</SetVariable>
+            <SetVariable name="Tooltip">Überlappend – neuer Titel blendet voll ein, erst dann blendet der alte aus</SetVariable>
+            <SetVariable name="mode">0</SetVariable>
+            <SetVariable name="curve">0.000400</SetVariable>
+            <SetVariable name="calibration">0.285714</SetVariable>
+          </Template>
+          <Template src="skin:btn_xfade.xml">
+            <SetVariable name="preset">3</SetVariable>
+            <SetVariable name="icon">fast</SetVariable>
+            <SetVariable name="Tooltip">Schnell – kurze Überblendung in der Mitte der Fade-Zeit</SetVariable>
+            <SetVariable name="mode">1</SetVariable>
+            <SetVariable name="curve">0.002401</SetVariable>
+            <SetVariable name="calibration">0.705286</SetVariable>
+          </Template>
+          <Template src="skin:btn_xfade.xml">
+            <SetVariable name="preset">4</SetVariable>
+            <SetVariable name="icon">cut</SetVariable>
+            <SetVariable name="Tooltip">Schnitt – harter Wechsel in der Mitte der Fade-Zeit</SetVariable>
+            <SetVariable name="mode">1</SetVariable>
+            <SetVariable name="curve">0.049430</SetVariable>
+            <SetVariable name="calibration">0.980332</SetVariable>
+          </Template>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                </Children>
+              </WidgetGroup>
+            </Children>
+          </WidgetGroup>
+        </Children>
+      </WidgetGroup>
+
+      <!-- Automix -->
+      <WidgetGroup>
+        <ObjectName>AutomixBox</ObjectName>
+        <Layout>horizontal</Layout>
+        <Size>236f,34f</Size>
+        <Children>
+          <PushButton>
+            <ObjectName>AutomixButton</ObjectName>
+            <Tooltip>Automix ein/aus – spielt die Automix-Warteschlange (Archiv → Auto DJ) mit Überblendung ab. Bei leerer Warteschlange schaltet Automix sofort wieder aus.</Tooltip>
+            <Size>96f,28f</Size>
+            <NumberStates>2</NumberStates>
+            <State><Number>0</Number><Text>AUTOMIX AUS</Text></State>
+            <State><Number>1</Number><Text>● AUTOMIX AN</Text></State>
+            <Connection>
+              <ConfigKey>[AutoDJ],enabled</ConfigKey>
+              <ButtonState>LeftButton</ButtonState>
+            </Connection>
+          </PushButton>
+          <PushButton>
+            <ObjectName>MixerButton</ObjectName>
+            <Tooltip>Jetzt sofort zum nächsten Titel überblenden (nur bei laufendem Automix)</Tooltip>
+            <Size>0me,28f</Size>
+            <NumberStates>1</NumberStates>
+            <State><Number>0</Number><Text>FADE</Text></State>
+            <Connection>
+              <ConfigKey>[AutoDJ],fade_now</ConfigKey>
+              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+              <ButtonState>LeftButton</ButtonState>
+              <ConnectValueToWidget>false</ConnectValueToWidget>
+            </Connection>
+            <!-- nur bedienbar, wenn Automix läuft -->
+            <Connection>
+              <ConfigKey>[AutoDJ],enabled</ConfigKey>
+              <BindProperty>enabled</BindProperty>
+            </Connection>
+          </PushButton>
+          <PushButton>
+            <ObjectName>MixerButton</ObjectName>
+            <Tooltip>Nächsten Titel in der Warteschlange überspringen (nur bei laufendem Automix)</Tooltip>
+            <Size>0me,28f</Size>
+            <NumberStates>1</NumberStates>
+            <State><Number>0</Number><Text>SKIP</Text></State>
+            <Connection>
+              <ConfigKey>[AutoDJ],skip_next</ConfigKey>
+              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+              <ButtonState>LeftButton</ButtonState>
+              <ConnectValueToWidget>false</ConnectValueToWidget>
+            </Connection>
+            <!-- nur bedienbar, wenn Automix läuft -->
+            <Connection>
+              <ConfigKey>[AutoDJ],enabled</ConfigKey>
+              <BindProperty>enabled</BindProperty>
+            </Connection>
+          </PushButton>
+        </Children>
+      </WidgetGroup>
+
+      <!-- Aufnahme / Bibliothek groß -->
+      <WidgetGroup>
+        <Layout>horizontal</Layout>
+        <Size>236f,32f</Size>
+        <Children>
+          <PushButton>
+            <ObjectName>RecButton</ObjectName>
+            <TooltipId>toggle_recording</TooltipId>
+            <Size>0me,28f</Size>
+            <NumberStates>3</NumberStates>
+            <State><Number>0</Number><Text>● REC</Text></State>
+            <State><Number>1</Number><Text>● REC</Text></State>
+            <State><Number>2</Number><Text>● REC</Text></State>
+            <Connection>
+              <ConfigKey>[Recording],toggle_recording</ConfigKey>
+              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+              <ButtonState>LeftButton</ButtonState>
+              <ConnectValueToWidget>false</ConnectValueToWidget>
+            </Connection>
+            <Connection>
+              <ConfigKey>[Recording],status</ConfigKey>
+              <ConnectValueFromWidget>false</ConnectValueFromWidget>
+            </Connection>
+          </PushButton>
+          <Template src="skin:btn_toggle.xml">
+            <SetVariable name="ObjectName">MixerToggle</SetVariable>
+            <SetVariable name="Tooltip">Laufende Wellenform ein-/ausblenden</SetVariable>
+            <SetVariable name="Size">0me,28f</SetVariable>
+            <SetVariable name="Text">WAVE</SetVariable>
+            <SetVariable name="ConfigKey">[Skin],show_waveforms</SetVariable>
+          </Template>
+          <Template src="skin:btn_toggle.xml">
+            <SetVariable name="ObjectName">MixerToggle</SetVariable>
+            <SetVariable name="Tooltip">Drehende Schallplatte ein-/ausblenden</SetVariable>
+            <SetVariable name="Size">0me,28f</SetVariable>
+            <SetVariable name="Text">DISC</SetVariable>
+            <SetVariable name="ConfigKey">[Skin],twindeck_show_spinny</SetVariable>
+          </Template>
+        </Children>
+      </WidgetGroup>
+    </Children>
+  </WidgetGroup>
+</Template>

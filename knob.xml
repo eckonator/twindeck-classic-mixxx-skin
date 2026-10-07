@@ -1,0 +1,32 @@
+<!-- Drehregler mit Beschriftung. Variablen: ConfigKey, TooltipId, Label -->
+<Template>
+  <WidgetGroup>
+    <SizePolicy>me,f</SizePolicy>
+    <Size>0me,58f</Size>
+    <Layout>vertical</Layout>
+    <Children>
+      <WidgetGroup>
+        <Layout>horizontal</Layout>
+        <Size>0me,40f</Size>
+        <Children>
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+          <KnobComposed>
+            <TooltipId><Variable name="TooltipId"/></TooltipId>
+            <Size>40f,40f</Size>
+            <Knob>skin:graphics/knob_indicator.svg</Knob>
+            <BackPath>skin:graphics/knob_bg.svg</BackPath>
+            <MinAngle>-135</MinAngle>
+            <MaxAngle>135</MaxAngle>
+            <Connection><ConfigKey><Variable name="ConfigKey"/></ConfigKey></Connection>
+          </KnobComposed>
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+        </Children>
+      </WidgetGroup>
+      <Label>
+        <ObjectName>KnobLabel</ObjectName>
+        <Size>0me,16f</Size>
+        <Text><Variable name="Label"/></Text>
+      </Label>
+    </Children>
+  </WidgetGroup>
+</Template>

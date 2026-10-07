@@ -1,0 +1,90 @@
+<!--
+  Pitch-Spalte am äußeren Rand eines Players.
+  Variablen: channum
+-->
+<Template>
+  <SetVariable name="group">[Channel<Variable name="channum"/>]</SetVariable>
+  <WidgetGroup>
+    <ObjectName>PitchPanel</ObjectName>
+    <Size>58f,0me</Size>
+    <Layout>vertical</Layout>
+    <Children>
+      <Label>
+        <ObjectName>PanelCaption</ObjectName>
+        <Size>58f,22f</Size>
+        <Text>PITCH</Text>
+      </Label>
+      <RateRange>
+        <ObjectName>RateRange</ObjectName>
+        <TooltipId>rate_range_display</TooltipId>
+        <Channel><Variable name="channum"/></Channel>
+        <Size>58f,14f</Size>
+      </RateRange>
+      <WidgetGroup>
+        <Layout>horizontal</Layout>
+        <SizePolicy>me,me</SizePolicy>
+        <Children>
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+          <SliderComposed>
+            <TooltipId>rate</TooltipId>
+            <Size>34f,0me</Size>
+            <Slider scalemode="STRETCH">skin:graphics/fader_track.svg</Slider>
+            <Handle scalemode="STRETCH_ASPECT">skin:graphics/pitch_handle.svg</Handle>
+            <Horizontal>false</Horizontal>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,rate</ConfigKey>
+            </Connection>
+          </SliderComposed>
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+        </Children>
+      </WidgetGroup>
+      <WidgetGroup>
+        <Layout>horizontal</Layout>
+        <Size>58f,22f</Size>
+        <Children>
+          <Template src="skin:btn_push.xml">
+            <SetVariable name="ObjectName">PitchButton</SetVariable>
+            <SetVariable name="Tooltip">Pitch in kleinen Schritten verringern</SetVariable>
+            <SetVariable name="Size">28f,22f</SetVariable>
+            <SetVariable name="Text">−</SetVariable>
+            <SetVariable name="ConfigKey"><Variable name="group"/>,rate_perm_down_small</SetVariable>
+          </Template>
+          <Template src="skin:btn_push.xml">
+            <SetVariable name="ObjectName">PitchButton</SetVariable>
+            <SetVariable name="Tooltip">Pitch in kleinen Schritten erhöhen</SetVariable>
+            <SetVariable name="Size">28f,22f</SetVariable>
+            <SetVariable name="Text">+</SetVariable>
+            <SetVariable name="ConfigKey"><Variable name="group"/>,rate_perm_up_small</SetVariable>
+          </Template>
+        </Children>
+      </WidgetGroup>
+      <WidgetGroup>
+        <Layout>horizontal</Layout>
+        <Size>58f,22f</Size>
+        <Children>
+          <Template src="skin:btn_push.xml">
+            <SetVariable name="ObjectName">PitchButton</SetVariable>
+            <SetVariable name="Tooltip">Bremsen (solange gedrückt)</SetVariable>
+            <SetVariable name="Size">28f,22f</SetVariable>
+            <SetVariable name="Text">◀</SetVariable>
+            <SetVariable name="ConfigKey"><Variable name="group"/>,rate_temp_down</SetVariable>
+          </Template>
+          <Template src="skin:btn_push.xml">
+            <SetVariable name="ObjectName">PitchButton</SetVariable>
+            <SetVariable name="Tooltip">Anschieben (solange gedrückt)</SetVariable>
+            <SetVariable name="Size">28f,22f</SetVariable>
+            <SetVariable name="Text">▶</SetVariable>
+            <SetVariable name="ConfigKey"><Variable name="group"/>,rate_temp_up</SetVariable>
+          </Template>
+        </Children>
+      </WidgetGroup>
+      <Template src="skin:btn_push.xml">
+        <SetVariable name="ObjectName">PitchButton</SetVariable>
+        <SetVariable name="Tooltip">Pitch auf 0 % zurücksetzen</SetVariable>
+        <SetVariable name="Size">58f,22f</SetVariable>
+        <SetVariable name="Text">0 %</SetVariable>
+        <SetVariable name="ConfigKey"><Variable name="group"/>,rate_set_zero</SetVariable>
+      </Template>
+    </Children>
+  </WidgetGroup>
+</Template>

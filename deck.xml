@@ -1,0 +1,531 @@
+<!--
+  Player (ohne Pitch-Spalte, die liegt außen in pitch.xml).
+  Variablen: channum (1/2), letter (A/B)
+-->
+<Template>
+  <SetVariable name="group">[Channel<Variable name="channum"/>]</SetVariable>
+  <WidgetGroup>
+    <ObjectName>DeckPanel</ObjectName>
+    <SizePolicy>me,me</SizePolicy>
+    <Layout>vertical</Layout>
+    <Children>
+
+      <!-- Kopfzeile: PLAYER A / Titel -->
+      <WidgetGroup>
+        <ObjectName>DeckHeader</ObjectName>
+        <Size>0me,28f</Size>
+        <Layout>horizontal</Layout>
+        <Children>
+          <Label>
+            <ObjectName>DeckLetter</ObjectName>
+            <Size>78f,28f</Size>
+            <Text>PLAYER <Variable name="letter"/></Text>
+          </Label>
+          <TrackProperty>
+            <ObjectName>DeckArtist</ObjectName>
+            <Style>QLabel { font-size: 17px; font-weight: bold; color: #d8e2ec; padding-left: 6px; }</Style>
+            <TooltipId>track_artist</TooltipId>
+            <Channel><Variable name="channum"/></Channel>
+            <Property>artist</Property>
+            <SizePolicy>me,f</SizePolicy>
+            <Elide>right</Elide>
+          </TrackProperty>
+          <!-- Beat-LED: blinkt im Takt -->
+          <WidgetGroup>
+            <Size>22f,28f</Size>
+            <Layout>vertical</Layout>
+            <Children>
+              <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
+              <WidgetGroup>
+                <ObjectName>BeatLed</ObjectName>
+                <Tooltip>Beat-Anzeige – blinkt im Takt des Titels</Tooltip>
+                <Size>12f,12f</Size>
+                <Connection>
+                  <ConfigKey><Variable name="group"/>,beat_active</ConfigKey>
+                  <BindProperty>highlight</BindProperty>
+                </Connection>
+              </WidgetGroup>
+              <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
+            </Children>
+          </WidgetGroup>
+          <PushButton>
+            <ObjectName>EjectButton</ObjectName>
+            <TooltipId>eject</TooltipId>
+            <Size>26f,18f</Size>
+            <NumberStates>1</NumberStates>
+            <State><Number>0</Number><Text>⏏</Text></State>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,eject</ConfigKey>
+              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+              <ButtonState>LeftButton</ButtonState>
+              <ConnectValueToWidget>false</ConnectValueToWidget>
+            </Connection>
+          </PushButton>
+        </Children>
+      </WidgetGroup>
+
+      <!-- LCD-Anzeige -->
+      <WidgetGroup>
+        <ObjectName>Lcd</ObjectName>
+        <SizePolicy>me,me</SizePolicy>
+        <MinimumSize>200,140</MinimumSize>
+        <Layout>horizontal</Layout>
+        <!-- Titelende naht: LCD färbt sich rot -->
+        <Connection>
+          <ConfigKey><Variable name="group"/>,end_of_track</ConfigKey>
+          <BindProperty>highlight</BindProperty>
+        </Connection>
+        <Children>
+          <WidgetGroup>
+            <ObjectName>LcdCoverBox</ObjectName>
+            <Size>112f,0me</Size>
+            <Layout>vertical</Layout>
+            <Children>
+              <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
+              <CoverArt>
+                <ObjectName>LcdCover</ObjectName>
+                <TooltipId>coverart</TooltipId>
+                <Group><Variable name="group"/></Group>
+                <Size>104f,104f</Size>
+              </CoverArt>
+              <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
+            </Children>
+          </WidgetGroup>
+          <WidgetGroup>
+            <SizePolicy>me,me</SizePolicy>
+            <Layout>vertical</Layout>
+            <Children>
+          <TrackProperty>
+            <ObjectName>LcdTitle</ObjectName>
+            <Style>QLabel { font-size: 22px; font-weight: bold; color: #9fe6ff; padding: 4px 6px 0px 6px; }</Style>
+            <TooltipId>track_title</TooltipId>
+            <Channel><Variable name="channum"/></Channel>
+            <Property>title</Property>
+            <SizePolicy>me,f</SizePolicy>
+            <Elide>right</Elide>
+          </TrackProperty>
+          <WidgetGroup>
+            <ObjectName>LcdDetails</ObjectName>
+            <SizePolicy>me,f</SizePolicy>
+            <Size>0me,22f</Size>
+            <Layout>horizontal</Layout>
+            <Children>
+              <TrackProperty>
+                <ObjectName>LcdDetail</ObjectName>
+                <Style>QLabel { font-size: 14px; color: #3f9cc4; padding-left: 6px; }</Style>
+                <Tooltip>Album</Tooltip>
+                <Channel><Variable name="channum"/></Channel>
+                <Property>album</Property>
+                <SizePolicy>me,f</SizePolicy>
+                <Elide>right</Elide>
+              </TrackProperty>
+              <TrackProperty>
+                <ObjectName>LcdDetailGenre</ObjectName>
+                <Style>QLabel { font-size: 14px; color: #3f9cc4; padding-left: 6px; }</Style>
+                <Tooltip>Genre</Tooltip>
+                <Channel><Variable name="channum"/></Channel>
+                <Property>genre</Property>
+                <Size>120f,22f</Size>
+                <Elide>right</Elide>
+              </TrackProperty>
+              <TrackProperty>
+                <ObjectName>LcdDetailYear</ObjectName>
+                <Style>QLabel { font-size: 14px; color: #3f9cc4; padding-right: 6px; }</Style>
+                <Tooltip>Jahr</Tooltip>
+                <Channel><Variable name="channum"/></Channel>
+                <Property>year</Property>
+                <Size>52f,22f</Size>
+              </TrackProperty>
+            </Children>
+          </WidgetGroup>
+          <WidgetGroup>
+            <SizePolicy>me,me</SizePolicy>
+            <Layout>horizontal</Layout>
+            <Children>
+              <NumberPos>
+                <ObjectName>LcdTime</ObjectName>
+                <Style>QLabel { font-size: 32px; font-weight: bold; color: #5fd7ff; padding-left: 6px; }</Style>
+                <TooltipId>track_time</TooltipId>
+                <Group><Variable name="group"/></Group>
+                <SizePolicy>me,me</SizePolicy>
+                <Alignment>left</Alignment>
+              </NumberPos>
+              <WidgetGroup>
+                <Size>92f,0me</Size>
+                <Layout>vertical</Layout>
+                <Children>
+                  <WidgetGroup>
+                    <Layout>horizontal</Layout>
+                    <SizePolicy>me,me</SizePolicy>
+                    <Children>
+                      <Label>
+                        <ObjectName>LcdCaption</ObjectName>
+                        <Size>28f,0me</Size>
+                        <Text>BPM</Text>
+                      </Label>
+                      <NumberBpm>
+                        <ObjectName>LcdBpm</ObjectName>
+                        <TooltipId>visual_bpm</TooltipId>
+                        <Channel><Variable name="channum"/></Channel>
+                        <SizePolicy>me,me</SizePolicy>
+                        <Alignment>right</Alignment>
+                        <Connection>
+                          <ConfigKey><Variable name="group"/>,visual_bpm</ConfigKey>
+                        </Connection>
+                      </NumberBpm>
+                    </Children>
+                  </WidgetGroup>
+                  <WidgetGroup>
+                    <Layout>horizontal</Layout>
+                    <SizePolicy>me,me</SizePolicy>
+                    <Children>
+                      <Label>
+                        <ObjectName>LcdCaption</ObjectName>
+                        <Size>28f,0me</Size>
+                        <Text>PITCH</Text>
+                      </Label>
+                      <NumberRate>
+                        <ObjectName>LcdRate</ObjectName>
+                        <TooltipId>rate_display</TooltipId>
+                        <Channel><Variable name="channum"/></Channel>
+                        <SizePolicy>me,me</SizePolicy>
+                        <Alignment>right</Alignment>
+                        <NumberOfDigits>1</NumberOfDigits>
+                      </NumberRate>
+                    </Children>
+                  </WidgetGroup>
+                  <WidgetGroup>
+                    <Layout>horizontal</Layout>
+                    <SizePolicy>me,me</SizePolicy>
+                    <Children>
+                      <Label>
+                        <ObjectName>LcdCaption</ObjectName>
+                        <Size>28f,0me</Size>
+                        <Text>KEY</Text>
+                      </Label>
+                      <Key>
+                        <ObjectName>LcdKey</ObjectName>
+                        <TooltipId>visual_key</TooltipId>
+                        <Channel><Variable name="channum"/></Channel>
+                        <SizePolicy>me,me</SizePolicy>
+                        <Alignment>right</Alignment>
+                        <Connection>
+                          <ConfigKey><Variable name="group"/>,visual_key</ConfigKey>
+                        </Connection>
+                      </Key>
+                    </Children>
+                  </WidgetGroup>
+                </Children>
+              </WidgetGroup>
+            </Children>
+          </WidgetGroup>
+            </Children>
+          </WidgetGroup>
+          <WidgetGroup>
+            <ObjectName>SpinnyBox</ObjectName>
+            <Size>140f,0me</Size>
+            <Layout>vertical</Layout>
+            <Children>
+              <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
+              <Spinny>
+                <TooltipId>spinny</TooltipId>
+                <Size>132f,132f</Size>
+                <Group><Variable name="group"/></Group>
+                <PathBackground scalemode="STRETCH_ASPECT">skin:graphics/spinny_bg.svg</PathBackground>
+                <PathMask scalemode="STRETCH_ASPECT">skin:graphics/spinny_mask.svg</PathMask>
+                <PathForeground>skin:graphics/spinny_indicator.svg</PathForeground>
+                <PathGhost>skin:graphics/spinny_ghost.svg</PathGhost>
+                <ShowCoverControl>[Skin],twindeck_spinny_cover</ShowCoverControl>
+              </Spinny>
+              <WidgetGroup><SizePolicy>f,me</SizePolicy></WidgetGroup>
+            </Children>
+            <Connection>
+              <ConfigKey>[Skin],twindeck_show_spinny</ConfigKey>
+              <BindProperty>visible</BindProperty>
+            </Connection>
+          </WidgetGroup>
+        </Children>
+      </WidgetGroup>
+
+      <!-- Übersicht des ganzen Titels (zum Springen anklicken) -->
+      <WidgetGroup>
+        <ObjectName>OverviewFrame</ObjectName>
+        <Size>0me,40f</Size>
+        <Layout>horizontal</Layout>
+        <Children>
+          <Overview>
+            <TooltipId>waveform_overview</TooltipId>
+            <Channel><Variable name="channum"/></Channel>
+            <SizePolicy>me,me</SizePolicy>
+            <BgColor>#05080c</BgColor>
+            <SignalColor>#5fd7ff</SignalColor>
+            <PlayPosColor>#ffffff</PlayPosColor>
+            <EndOfTrackColor>#ff3b30</EndOfTrackColor>
+            <PlayedOverlayColor>#90000000</PlayedOverlayColor>
+            <PassthroughLabelColor>#ffcc00</PassthroughLabelColor>
+            <DefaultMark>
+              <Align>bottom|right</Align>
+              <Color>#e08a12</Color>
+              <TextColor>#000000</TextColor>
+              <Text> %1 </Text>
+            </DefaultMark>
+            <Mark>
+              <Control>cue_point</Control>
+              <Text>C</Text>
+              <Align>top|right</Align>
+              <Color>#ff3b30</Color>
+              <TextColor>#ffffff</TextColor>
+            </Mark>
+            <MarkRange>
+              <StartControl>loop_start_position</StartControl>
+              <EndControl>loop_end_position</EndControl>
+              <EnabledControl>loop_enabled</EnabledControl>
+              <Color>#34d058</Color>
+              <Opacity>0.6</Opacity>
+              <DisabledColor>#ffffff</DisabledColor>
+              <DisabledOpacity>0.3</DisabledOpacity>
+            </MarkRange>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,playposition</ConfigKey>
+              <EmitOnDownPress>false</EmitOnDownPress>
+            </Connection>
+          </Overview>
+        </Children>
+      </WidgetGroup>
+
+      <!-- Laufende Wellenform (flach) -->
+      <WidgetGroup>
+        <SizePolicy>me,f</SizePolicy>
+        <Size>0me,64f</Size>
+        <Layout>horizontal</Layout>
+        <Children>
+      <!-- Laufende Wellenform (über Ansicht-Menü ausblendbar) -->
+      <WidgetGroup>
+        <ObjectName>WaveformFrame</ObjectName>
+        <SizePolicy>me,f</SizePolicy>
+        <Size>0me,64f</Size>
+        <Layout>horizontal</Layout>
+        <Children>
+          <Visual>
+            <TooltipId>waveform_display</TooltipId>
+            <Channel><Variable name="channum"/></Channel>
+            <SizePolicy>me,me</SizePolicy>
+            <BgColor>#05080c</BgColor>
+            <SignalColor>#5fd7ff</SignalColor>
+            <BeatColor>#3a4552</BeatColor>
+            <PlayPosColor>#ffffff</PlayPosColor>
+            <EndOfTrackColor>#ff3b30</EndOfTrackColor>
+            <AxesColor>#1c2630</AxesColor>
+            <PassthroughLabelColor>#ffcc00</PassthroughLabelColor>
+            <DefaultMark>
+              <Align>top</Align>
+              <Color>#e08a12</Color>
+              <TextColor>#000000</TextColor>
+              <Text> %1 </Text>
+            </DefaultMark>
+            <Mark>
+              <Control>cue_point</Control>
+              <Text>CUE</Text>
+              <Align>top</Align>
+              <Color>#ff3b30</Color>
+              <TextColor>#ffffff</TextColor>
+            </Mark>
+            <MarkRange>
+              <StartControl>loop_start_position</StartControl>
+              <EndControl>loop_end_position</EndControl>
+              <EnabledControl>loop_enabled</EnabledControl>
+              <Color>#34d058</Color>
+              <Opacity>0.5</Opacity>
+              <DisabledColor>#ffffff</DisabledColor>
+              <DisabledOpacity>0.2</DisabledOpacity>
+            </MarkRange>
+          </Visual>
+        </Children>
+        <Connection>
+          <ConfigKey>[Skin],show_waveforms</ConfigKey>
+          <BindProperty>visible</BindProperty>
+        </Connection>
+      </WidgetGroup>
+        </Children>
+      </WidgetGroup>
+
+      <!-- Laufwerkstasten -->
+      <WidgetGroup>
+        <ObjectName>TransportRow</ObjectName>
+        <Size>0me,38f</Size>
+        <Layout>horizontal</Layout>
+        <Children>
+          <PushButton>
+            <ObjectName>CueButton</ObjectName>
+            <TooltipId>cue_default_cue_gotoandstop</TooltipId>
+            <Size>54f,32f</Size>
+            <NumberStates>2</NumberStates>
+            <State><Number>0</Number><Text>CUE</Text></State>
+            <State><Number>1</Number><Text>CUE</Text></State>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,cue_default</ConfigKey>
+              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+              <ButtonState>LeftButton</ButtonState>
+              <ConnectValueToWidget>false</ConnectValueToWidget>
+            </Connection>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,cue_gotoandstop</ConfigKey>
+              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+              <ButtonState>RightButton</ButtonState>
+              <ConnectValueToWidget>false</ConnectValueToWidget>
+            </Connection>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,cue_indicator</ConfigKey>
+              <ConnectValueFromWidget>false</ConnectValueFromWidget>
+            </Connection>
+          </PushButton>
+
+          <PushButton>
+            <ObjectName>PlayButton</ObjectName>
+            <TooltipId>play_cue_set</TooltipId>
+            <Size>70f,32f</Size>
+            <NumberStates>2</NumberStates>
+            <State><Number>0</Number><Text>▶ ❚❚</Text></State>
+            <State><Number>1</Number><Text>▶ ❚❚</Text></State>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,play</ConfigKey>
+              <ButtonState>LeftButton</ButtonState>
+              <ConnectValueToWidget>false</ConnectValueToWidget>
+            </Connection>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,cue_set</ConfigKey>
+              <ButtonState>RightButton</ButtonState>
+              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+              <ConnectValueToWidget>false</ConnectValueToWidget>
+            </Connection>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,play_indicator</ConfigKey>
+              <ConnectValueFromWidget>false</ConnectValueFromWidget>
+            </Connection>
+          </PushButton>
+
+          <Template src="skin:btn_push.xml">
+            <SetVariable name="ObjectName">StopButton</SetVariable>
+            <SetVariable name="Tooltip">Stopp – hält an und springt zum Anfang</SetVariable>
+            <SetVariable name="Size">46f,32f</SetVariable>
+            <SetVariable name="Text">■</SetVariable>
+            <SetVariable name="ConfigKey"><Variable name="group"/>,start_stop</SetVariable>
+          </Template>
+
+          <WidgetGroup><Size>8f,1f</Size></WidgetGroup>
+
+          <Template src="skin:btn_toggle.xml">
+            <SetVariable name="ObjectName">SyncButton</SetVariable>
+            <SetVariable name="Tooltip">Sync – Tempo und Takt an den anderen Player angleichen</SetVariable>
+            <SetVariable name="Size">50f,32f</SetVariable>
+            <SetVariable name="Text">SYNC</SetVariable>
+            <SetVariable name="ConfigKey"><Variable name="group"/>,sync_enabled</SetVariable>
+          </Template>
+
+          <Template src="skin:btn_push.xml">
+            <SetVariable name="ObjectName">DeckButton</SetVariable>
+            <SetVariable name="Tooltip">Tap – BPM im Takt mittippen</SetVariable>
+            <SetVariable name="Size">44f,32f</SetVariable>
+            <SetVariable name="Text">TAP</SetVariable>
+            <SetVariable name="ConfigKey"><Variable name="group"/>,bpm_tap</SetVariable>
+          </Template>
+
+          <Template src="skin:btn_toggle.xml">
+            <SetVariable name="ObjectName">DeckToggle</SetVariable>
+            <SetVariable name="Tooltip">Master Tempo – Tonhöhe beim Pitchen beibehalten</SetVariable>
+            <SetVariable name="Size">50f,32f</SetVariable>
+            <SetVariable name="Text">M.T.</SetVariable>
+            <SetVariable name="ConfigKey"><Variable name="group"/>,keylock</SetVariable>
+          </Template>
+
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+
+          <Template src="skin:btn_toggle.xml">
+            <SetVariable name="ObjectName">PflButton</SetVariable>
+            <SetVariable name="Tooltip">Vorhören über Kopfhörer</SetVariable>
+            <SetVariable name="Size">58f,32f</SetVariable>
+            <SetVariable name="Text">🎧 PFL</SetVariable>
+            <SetVariable name="ConfigKey"><Variable name="group"/>,pfl</SetVariable>
+          </Template>
+        </Children>
+      </WidgetGroup>
+
+      <!-- Cue-Speicher und Loops -->
+      <WidgetGroup>
+        <ObjectName>CueLoopRow</ObjectName>
+        <Size>0me,30f</Size>
+        <Layout>horizontal</Layout>
+        <Children>
+          <Label>
+            <ObjectName>RowCaption</ObjectName>
+            <Size>34f,24f</Size>
+            <Text>CUES</Text>
+          </Label>
+          <Template src="skin:btn_hotcue.xml"><SetVariable name="hotcue">1</SetVariable></Template>
+          <Template src="skin:btn_hotcue.xml"><SetVariable name="hotcue">2</SetVariable></Template>
+          <Template src="skin:btn_hotcue.xml"><SetVariable name="hotcue">3</SetVariable></Template>
+          <Template src="skin:btn_hotcue.xml"><SetVariable name="hotcue">4</SetVariable></Template>
+
+          <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+
+          <Label>
+            <ObjectName>RowCaption</ObjectName>
+            <Size>38f,24f</Size>
+            <Text>LOOP</Text>
+          </Label>
+          <Template src="skin:btn_push.xml">
+            <SetVariable name="ObjectName">LoopButton</SetVariable>
+            <SetVariable name="Tooltip">Loop-Anfang setzen</SetVariable>
+            <SetVariable name="Size">36f,24f</SetVariable>
+            <SetVariable name="Text">IN</SetVariable>
+            <SetVariable name="ConfigKey"><Variable name="group"/>,loop_in</SetVariable>
+          </Template>
+          <Template src="skin:btn_push.xml">
+            <SetVariable name="ObjectName">LoopButton</SetVariable>
+            <SetVariable name="Tooltip">Loop-Ende setzen</SetVariable>
+            <SetVariable name="Size">40f,24f</SetVariable>
+            <SetVariable name="Text">OUT</SetVariable>
+            <SetVariable name="ConfigKey"><Variable name="group"/>,loop_out</SetVariable>
+          </Template>
+          <PushButton>
+            <ObjectName>LoopButton</ObjectName>
+            <TooltipId>beatloop_activate</TooltipId>
+            <Size>36f,24f</Size>
+            <NumberStates>2</NumberStates>
+            <State><Number>0</Number><Text>4</Text></State>
+            <State><Number>1</Number><Text>4</Text></State>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,beatloop_4_toggle</ConfigKey>
+              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+              <ButtonState>LeftButton</ButtonState>
+              <ConnectValueToWidget>false</ConnectValueToWidget>
+            </Connection>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,beatloop_4_enabled</ConfigKey>
+              <ConnectValueFromWidget>false</ConnectValueFromWidget>
+            </Connection>
+          </PushButton>
+          <PushButton>
+            <ObjectName>LoopButton</ObjectName>
+            <TooltipId>reloop_toggle</TooltipId>
+            <Size>46f,24f</Size>
+            <NumberStates>2</NumberStates>
+            <State><Number>0</Number><Text>EXIT</Text></State>
+            <State><Number>1</Number><Text>EXIT</Text></State>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,reloop_toggle</ConfigKey>
+              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+              <ButtonState>LeftButton</ButtonState>
+              <ConnectValueToWidget>false</ConnectValueToWidget>
+            </Connection>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,loop_enabled</ConfigKey>
+              <ConnectValueFromWidget>false</ConnectValueFromWidget>
+            </Connection>
+          </PushButton>
+        </Children>
+      </WidgetGroup>
+
+    </Children>
+  </WidgetGroup>
+</Template>

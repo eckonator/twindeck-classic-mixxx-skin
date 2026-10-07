@@ -1,0 +1,67 @@
+<!--
+  TwinDeck Classic – ein schlanker Skin für Mixxx 2.5
+  im Stil klassischer 2-Player-DJ-Software der frühen 2000er.
+
+  Oben:  Pitch A | Player A | Mixer (inkl. Automix) | Player B | Pitch B
+  Unten: Archiv (Bibliothek, Playlisten, Automix-Warteschlange)
+-->
+<!DOCTYPE skin>
+<skin>
+  <manifest>
+    <title>TwinDeck Classic</title>
+    <author>BpmReloadet</author>
+    <version>1.0.0</version>
+    <description>Schlichter 2-Player-Skin im Retro-Stil: zwei Player, Mixer mit Automix und Überblend-Vorwahl, Archiv.</description>
+    <language>de</language>
+    <license>GPL-2.0-or-later</license>
+    <attributes>
+      <attribute config_key="[App],num_decks">2</attribute>
+      <attribute config_key="[App],num_samplers">0</attribute>
+      <attribute config_key="[App],num_preview_decks">1</attribute>
+      <attribute persist="true" config_key="[Skin],show_waveforms">1</attribute>
+      <attribute persist="true" config_key="[Skin],twindeck_show_spinny">1</attribute>
+      <attribute persist="true" config_key="[Skin],twindeck_spinny_cover">0</attribute>
+      <!-- Überblendform beim Start: "Gleichmäßig" (passend zu Taste 1) -->
+      <attribute persist="false" config_key="[Skin],twindeck_xfade_preset">1</attribute>
+      <attribute persist="false" config_key="[Mixer Profile],xFaderMode">1</attribute>
+      <attribute persist="false" config_key="[Mixer Profile],xFaderCurve">1.0</attribute>
+      <attribute persist="false" config_key="[Mixer Profile],xFaderCalibration">0.5</attribute>
+    </attributes>
+  </manifest>
+
+  <ObjectName>Mixxx</ObjectName>
+  <Style src="skin:style.qss"
+         src-linux="skins:default-menu-styles-linux.qss"
+         src-windows="skins:default-menu-styles-windows.qss"/>
+  <MinimumSize>1100,680</MinimumSize>
+  <SizePolicy>me,me</SizePolicy>
+  <Layout>vertical</Layout>
+
+  <Children>
+    <WidgetGroup>
+      <ObjectName>TopSection</ObjectName>
+      <SizePolicy>me,min</SizePolicy>
+      <Size>0me,330min</Size>
+      <Layout>horizontal</Layout>
+      <Children>
+        <Template src="skin:pitch.xml">
+          <SetVariable name="channum">1</SetVariable>
+        </Template>
+        <Template src="skin:deck.xml">
+          <SetVariable name="channum">1</SetVariable>
+          <SetVariable name="letter">A</SetVariable>
+        </Template>
+        <Template src="skin:mixer.xml"/>
+        <Template src="skin:deck.xml">
+          <SetVariable name="channum">2</SetVariable>
+          <SetVariable name="letter">B</SetVariable>
+        </Template>
+        <Template src="skin:pitch.xml">
+          <SetVariable name="channum">2</SetVariable>
+        </Template>
+      </Children>
+    </WidgetGroup>
+
+    <Template src="skin:library.xml"/>
+  </Children>
+</skin>

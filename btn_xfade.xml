@@ -1,0 +1,54 @@
+<!--
+  Vorwahltaste für die Überblendform (Crossfader-Kurve, wirkt auch beim Automix).
+  Ein Klick setzt Modus, Kurve und Kalibrierung auf feste Werte; die IsEqual-
+  Transformation sorgt dafür, dass genau dieser Wert gesendet wird.
+  [Skin],twindeck_xfade_preset merkt sich, welche Taste aktiv ist.
+  Variablen: preset, icon, Tooltip, mode, curve, calibration
+  (curve/calibration als normierte Parameter 0..1 der jeweiligen Regler)
+-->
+<Template>
+  <PushButton>
+    <ObjectName>XfadePreset</ObjectName>
+    <Tooltip><Variable name="Tooltip"/></Tooltip>
+    <Size>48f,30f</Size>
+    <NumberStates>2</NumberStates>
+    <LeftClickIsPushButton>true</LeftClickIsPushButton>
+    <State>
+      <Number>0</Number>
+      <Unpressed scalemode="STRETCH">skin:graphics/xfade_<Variable name="icon"/>_off.svg</Unpressed>
+      <Pressed scalemode="STRETCH">skin:graphics/xfade_<Variable name="icon"/>_on.svg</Pressed>
+    </State>
+    <State>
+      <Number>1</Number>
+      <Unpressed scalemode="STRETCH">skin:graphics/xfade_<Variable name="icon"/>_on.svg</Unpressed>
+      <Pressed scalemode="STRETCH">skin:graphics/xfade_<Variable name="icon"/>_on.svg</Pressed>
+    </State>
+    <Connection>
+      <ConfigKey>[Skin],twindeck_xfade_preset</ConfigKey>
+      <Transform><IsEqual><Variable name="preset"/></IsEqual></Transform>
+      <EmitOnDownPress>true</EmitOnDownPress>
+      <ButtonState>LeftButton</ButtonState>
+    </Connection>
+    <Connection>
+      <ConfigKey>[Mixer Profile],xFaderMode</ConfigKey>
+      <Transform><IsEqual><Variable name="mode"/></IsEqual></Transform>
+      <EmitOnDownPress>true</EmitOnDownPress>
+      <ButtonState>LeftButton</ButtonState>
+      <ConnectValueToWidget>false</ConnectValueToWidget>
+    </Connection>
+    <Connection>
+      <ConfigKey>[Mixer Profile],xFaderCurve</ConfigKey>
+      <Transform><IsEqual><Variable name="curve"/></IsEqual></Transform>
+      <EmitOnDownPress>true</EmitOnDownPress>
+      <ButtonState>LeftButton</ButtonState>
+      <ConnectValueToWidget>false</ConnectValueToWidget>
+    </Connection>
+    <Connection>
+      <ConfigKey>[Mixer Profile],xFaderCalibration</ConfigKey>
+      <Transform><IsEqual><Variable name="calibration"/></IsEqual></Transform>
+      <EmitOnDownPress>true</EmitOnDownPress>
+      <ButtonState>LeftButton</ButtonState>
+      <ConnectValueToWidget>false</ConnectValueToWidget>
+    </Connection>
+  </PushButton>
+</Template>

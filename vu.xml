@@ -1,0 +1,15 @@
+<!-- Pegelanzeige. Variablen: ConfigKey -->
+<Template>
+  <VuMeter>
+    <TooltipId>channel_VuMeter</TooltipId>
+    <Size>8f,0me</Size>
+    <PathBack scalemode="STRETCH">skin:graphics/vu_back.png</PathBack>
+    <PathVu scalemode="STRETCH">skin:graphics/vu_front.png</PathVu>
+    <Horizontal>false</Horizontal>
+    <PeakHoldSize>3</PeakHoldSize>
+    <PeakHoldTime>500</PeakHoldTime>
+    <PeakFallTime>20</PeakFallTime>
+    <PeakFallStep>2</PeakFallStep>
+    <Connection><ConfigKey><Variable name="ConfigKey"/></ConfigKey></Connection>
+  </VuMeter>
+</Template>

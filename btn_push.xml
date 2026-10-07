@@ -1,0 +1,18 @@
+<!--
+  Taster (nur solange gedrückt aktiv bzw. einmaliges Auslösen).
+  Variablen: ObjectName, Size, Text, ConfigKey, Tooltip
+-->
+<Template>
+  <PushButton>
+    <ObjectName><Variable name="ObjectName"/></ObjectName>
+    <Tooltip><Variable name="Tooltip"/></Tooltip>
+    <Size><Variable name="Size"/></Size>
+    <NumberStates>1</NumberStates>
+    <State><Number>0</Number><Text><Variable name="Text"/></Text></State>
+    <Connection>
+      <ConfigKey><Variable name="ConfigKey"/></ConfigKey>
+      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+      <ButtonState>LeftButton</ButtonState>
+    </Connection>
+  </PushButton>
+</Template>

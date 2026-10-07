@@ -1,0 +1,36 @@
+<!-- Archiv: Seitenleiste mit Suche links, Titelliste rechts -->
+<Template>
+  <WidgetGroup>
+    <ObjectName>LibraryPanel</ObjectName>
+    <SizePolicy>me,me</SizePolicy>
+    <Layout>horizontal</Layout>
+    <Children>
+      <Splitter>
+        <SizePolicy>me,me</SizePolicy>
+        <SplitSizes>1,4</SplitSizes>
+        <Collapsible>1,0</Collapsible>
+        <SplitSizesConfigKey>[Skin],librarySidebar_splitsize</SplitSizesConfigKey>
+        <Children>
+          <WidgetGroup>
+            <SizePolicy>i,min</SizePolicy>
+            <Layout>vertical</Layout>
+            <Children>
+              <Label>
+                <ObjectName>PanelCaption</ObjectName>
+                <Size>0me,22f</Size>
+                <Text>ARCHIV</Text>
+              </Label>
+              <SearchBox></SearchBox>
+              <WidgetGroup><Size>1f,4f</Size></WidgetGroup>
+              <LibrarySidebar></LibrarySidebar>
+            </Children>
+          </WidgetGroup>
+          <Library>
+            <ShowButtonText>true</ShowButtonText>
+            <TrackTableBackgroundColorOpacity>0.2</TrackTableBackgroundColorOpacity>
+          </Library>
+        </Children>
+      </Splitter>
+    </Children>
+  </WidgetGroup>
+</Template>
