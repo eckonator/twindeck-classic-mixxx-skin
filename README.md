@@ -58,6 +58,46 @@ no four decks: just what you actually need to play a set.
 - **End-of-track warning:** set the timing under *Preferences → Waveforms → End of track warning*.
 - On startup the transition preset **Smooth** is always active.
 
+## Optional: TwinDeck Classic Helper (vinyl brake & timed fade)
+
+A Mixxx skin cannot trigger effects like the vinyl brake on its own; Mixxx only offers them to
+controller scripts. The optional **TwinDeck Classic Helper** is such a script. It runs on a
+*virtual* MIDI port, so no hardware is needed. With the helper active:
+
+- **▶ ❚❚** brakes the track like a turntable being switched off (it stays at that position) and
+  spins it up softly when you press play again
+- **■** brakes the track as well; pressing it while stopped jumps back to the start
+- **FADE** cross-fades to the other player within the time set by the new **DAUER** (duration) slider
+  (0–20 s), using the selected transition shape. While automix is running, Auto DJ handles the fade.
+
+Without the helper, the skin works exactly as before. Its extra controls are only shown while the
+helper is running.
+
+### Setup
+
+1. **Create a virtual MIDI port**
+   - **macOS:** open *Audio MIDI Setup* → *Window → Show MIDI Studio* → double-click *IAC Driver* →
+     tick *Device is online* → *Apply*.
+   - **Windows:** install the free [loopMIDI](https://www.tobias-erichsen.de/software/loopmidi.html)
+     and create a port.
+   - **Linux:** the *Midi Through* port is usually available already.
+2. **Copy the helper** from the `controllers` folder of this repository
+   (`TwinDeck-Classic-Helper.midi.xml` and `TwinDeck-Classic-Helper.js`) into the Mixxx
+   controllers folder:
+
+   | System | Controllers folder |
+   |---|---|
+   | Windows | `%LOCALAPPDATA%\Mixxx\controllers\` |
+   | macOS (download from mixxx.org) | `~/Library/Containers/org.mixxx.mixxx/Data/Library/Application Support/Mixxx/controllers/` |
+   | macOS (self-built / Homebrew) | `~/Library/Application Support/Mixxx/controllers/` |
+   | Linux | `~/.mixxx/controllers/` |
+
+   Create the folder if it does not exist.
+3. **Enable it in Mixxx:** *Preferences → Controllers →* your virtual port (e.g. *IAC Driver Bus 1*)
+   → select the mapping **TwinDeck Classic Helper** → tick *Enabled* → *OK*.
+
+The **DAUER** slider below the transition buttons appears as soon as the helper is running.
+
 ## Requirements
 
 - Mixxx 2.5 (developed and tested with 2.5.6 on macOS)

@@ -535,37 +535,137 @@
             </Connection>
           </PushButton>
 
-          <PushButton>
-            <ObjectName>PlayButton</ObjectName>
-            <TooltipId>play_cue_set</TooltipId>
+          <!-- Play: ohne Helfer direkt, mit Helfer mit sanftem Anlauf / Plattenbremse -->
+          <WidgetGroup>
             <Size>70f,32f</Size>
-            <NumberStates>2</NumberStates>
-            <State><Number>0</Number><Text>▶ ❚❚</Text></State>
-            <State><Number>1</Number><Text>▶ ❚❚</Text></State>
-            <Connection>
-              <ConfigKey><Variable name="group"/>,play</ConfigKey>
-              <ButtonState>LeftButton</ButtonState>
-              <ConnectValueToWidget>false</ConnectValueToWidget>
-            </Connection>
-            <Connection>
-              <ConfigKey><Variable name="group"/>,cue_set</ConfigKey>
-              <ButtonState>RightButton</ButtonState>
-              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
-              <ConnectValueToWidget>false</ConnectValueToWidget>
-            </Connection>
-            <Connection>
-              <ConfigKey><Variable name="group"/>,play_indicator</ConfigKey>
-              <ConnectValueFromWidget>false</ConnectValueFromWidget>
-            </Connection>
-          </PushButton>
+            <Layout>horizontal</Layout>
+            <Children>
+              <WidgetGroup>
+                <Size>70f,32f</Size>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <PushButton>
+                    <ObjectName>PlayButton</ObjectName>
+                    <TooltipId>play_cue_set</TooltipId>
+                    <Size>70f,32f</Size>
+                    <NumberStates>2</NumberStates>
+                    <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_play_off.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_play_off.svg</Pressed></State>
+                    <State><Number>1</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_play_on.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_play_on.svg</Pressed></State>
+                    <Connection>
+                      <ConfigKey><Variable name="group"/>,play</ConfigKey>
+                      <ButtonState>LeftButton</ButtonState>
+                      <ConnectValueToWidget>false</ConnectValueToWidget>
+                    </Connection>
+                    <Connection>
+                      <ConfigKey><Variable name="group"/>,cue_set</ConfigKey>
+                      <ButtonState>RightButton</ButtonState>
+                      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+                      <ConnectValueToWidget>false</ConnectValueToWidget>
+                    </Connection>
+                    <Connection>
+                      <ConfigKey><Variable name="group"/>,play_indicator</ConfigKey>
+                      <ConnectValueFromWidget>false</ConnectValueFromWidget>
+                    </Connection>
+                  </PushButton>
+                </Children>
+                <Connection>
+                  <ConfigKey>[Skin],twindeck_helper_active</ConfigKey>
+                  <BindProperty>visible</BindProperty>
+                  <Transform><Not/></Transform>
+                </Connection>
+              </WidgetGroup>
+              <WidgetGroup>
+                <Size>70f,32f</Size>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <PushButton>
+                    <ObjectName>PlayButton</ObjectName>
+                    <Tooltip>Play/Pause – läuft wie ein Plattenspieler langsam an bzw. bremst ab. Rechtsklick: Cue-Punkt setzen</Tooltip>
+                    <Size>70f,32f</Size>
+                    <NumberStates>2</NumberStates>
+                    <!-- Taster statt Umschalter: jeder Klick sendet 1 (drücken) und 0 (loslassen),
+                         sonst würde nur jeder zweite Klick beim Helfer ankommen -->
+                    <LeftClickIsPushButton>true</LeftClickIsPushButton>
+                    <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_play_off.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_play_off.svg</Pressed></State>
+                    <State><Number>1</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_play_on.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_play_on.svg</Pressed></State>
+                    <Connection>
+                      <ConfigKey>[Skin],twindeck_play_<Variable name="channum"/></ConfigKey>
+                      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+                      <ButtonState>LeftButton</ButtonState>
+                      <ConnectValueToWidget>false</ConnectValueToWidget>
+                    </Connection>
+                    <Connection>
+                      <ConfigKey><Variable name="group"/>,cue_set</ConfigKey>
+                      <ButtonState>RightButton</ButtonState>
+                      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+                      <ConnectValueToWidget>false</ConnectValueToWidget>
+                    </Connection>
+                    <Connection>
+                      <ConfigKey><Variable name="group"/>,play_indicator</ConfigKey>
+                      <ConnectValueFromWidget>false</ConnectValueFromWidget>
+                    </Connection>
+                  </PushButton>
+                </Children>
+                <Connection>
+                  <ConfigKey>[Skin],twindeck_helper_active</ConfigKey>
+                  <BindProperty>visible</BindProperty>
+                </Connection>
+              </WidgetGroup>
+            </Children>
+          </WidgetGroup>
 
-          <Template src="skin:btn_push.xml">
-            <SetVariable name="ObjectName">StopButton</SetVariable>
-            <SetVariable name="Tooltip">Stopp – hält an und springt zum Anfang</SetVariable>
-            <SetVariable name="Size">46f,32f</SetVariable>
-            <SetVariable name="Text">■</SetVariable>
-            <SetVariable name="ConfigKey"><Variable name="group"/>,start_stop</SetVariable>
-          </Template>
+          <!-- Stopp: ohne Helfer sofort zum Anfang, mit Helfer Plattenbremse -->
+          <WidgetGroup>
+            <Size>46f,32f</Size>
+            <Layout>horizontal</Layout>
+            <Children>
+              <WidgetGroup>
+                <Size>46f,32f</Size>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <PushButton>
+                    <ObjectName>StopButton</ObjectName>
+                    <Tooltip>Stopp – hält an und springt zum Anfang</Tooltip>
+                    <Size>46f,32f</Size>
+                    <NumberStates>1</NumberStates>
+                    <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_stop.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_stop.svg</Pressed></State>
+                    <Connection>
+                      <ConfigKey><Variable name="group"/>,start_stop</ConfigKey>
+                      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+                      <ButtonState>LeftButton</ButtonState>
+                    </Connection>
+                  </PushButton>
+                </Children>
+                <Connection>
+                  <ConfigKey>[Skin],twindeck_helper_active</ConfigKey>
+                  <BindProperty>visible</BindProperty>
+                  <Transform><Not/></Transform>
+                </Connection>
+              </WidgetGroup>
+              <WidgetGroup>
+                <Size>46f,32f</Size>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <PushButton>
+                    <ObjectName>StopButton</ObjectName>
+                    <Tooltip>Stopp – bremst wie ein Plattenspieler ab und bleibt an der Stelle stehen. Steht der Titel bereits: zurück zum Anfang</Tooltip>
+                    <Size>46f,32f</Size>
+                    <NumberStates>1</NumberStates>
+                    <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_stop.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_stop.svg</Pressed></State>
+                    <Connection>
+                      <ConfigKey>[Skin],twindeck_stop_<Variable name="channum"/></ConfigKey>
+                      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+                      <ButtonState>LeftButton</ButtonState>
+                    </Connection>
+                  </PushButton>
+                </Children>
+                <Connection>
+                  <ConfigKey>[Skin],twindeck_helper_active</ConfigKey>
+                  <BindProperty>visible</BindProperty>
+                </Connection>
+              </WidgetGroup>
+            </Children>
+          </WidgetGroup>
 
           <WidgetGroup><Size>8f,1f</Size></WidgetGroup>
 

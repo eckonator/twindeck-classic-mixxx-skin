@@ -21,6 +21,15 @@
       <attribute persist="true" config_key="[Skin],show_waveforms">1</attribute>
       <attribute persist="true" config_key="[Skin],twindeck_show_spinny">1</attribute>
       <attribute persist="true" config_key="[Skin],twindeck_spinny_cover">0</attribute>
+      <!-- TwinDeck Classic Helper (Controller-Skript): ohne Helfer bleibt alles wie gehabt -->
+      <attribute persist="false" config_key="[Skin],twindeck_helper_active">0</attribute>
+      <attribute persist="false" config_key="[Skin],twindeck_play_1">0</attribute>
+      <attribute persist="false" config_key="[Skin],twindeck_play_2">0</attribute>
+      <attribute persist="false" config_key="[Skin],twindeck_stop_1">0</attribute>
+      <attribute persist="false" config_key="[Skin],twindeck_stop_2">0</attribute>
+      <attribute persist="false" config_key="[Skin],twindeck_fade">0</attribute>
+      <attribute persist="true" config_key="[Skin],twindeck_fade_time">0.4</attribute>
+      <attribute persist="false" config_key="[Skin],twindeck_fade_seconds">8</attribute>
       <!-- Überblendform beim Start: "Gleichmäßig" (passend zu Taste 1) -->
       <attribute persist="false" config_key="[Skin],twindeck_xfade_preset">1</attribute>
       <attribute persist="false" config_key="[Mixer Profile],xFaderMode">1</attribute>

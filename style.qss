@@ -175,9 +175,8 @@ WPushButton[displayValue="1"] {
 }
 
 /* Play = Grün */
-#PlayButton {
-  font-size: 15px;
-}
+/* Play/Pause und Stopp zeigen Grafiken (graphics/btn_play_*.svg, btn_stop.svg),
+   damit die Symbole exakt auf einer Höhe sitzen */
 #PlayButton[displayValue="1"] {
   color: #04140a;
   background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #8af5a4, stop:1 #2fb455);
@@ -223,7 +222,7 @@ WPushButton[displayValue="1"] {
 }
 
 /* reine Taster (kein Zustand) */
-#StopButton, #PitchButton, #MixerButton, #DeckButton, #EjectButton {
+#PitchButton, #MixerButton, #DeckButton, #EjectButton {
   color: #d8e2ec;
 }
 
@@ -464,4 +463,20 @@ QSplitter::handle:vertical {
 }
 QSplitter::handle:vertical:hover {
   background-color: #e08a12;
+}
+
+/* Dauer der FADE-Überblendung */
+#FadeSeconds, #FadeSecondsUnit {
+  color: #5fd7ff;
+  font-size: 13px;
+  font-weight: bold;
+}
+#FadeSecondsUnit {
+  padding-left: 2px;
+}
+#FadeAutoDj {
+  color: #2fb455;
+  font-size: 11px;
+  font-weight: bold;
+  qproperty-alignment: 'AlignRight | AlignVCenter';
 }

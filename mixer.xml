@@ -211,6 +211,80 @@
         </Children>
       </WidgetGroup>
 
+      <!-- Dauer der FADE-Überblendung (nur mit TwinDeck Classic Helper) -->
+      <WidgetGroup>
+        <ObjectName>FadeTimeRow</ObjectName>
+        <Layout>horizontal</Layout>
+        <Size>0me,28f</Size>
+        <Children>
+          <Label>
+            <ObjectName>RowCaption</ObjectName>
+            <Size>44f,28f</Size>
+            <Text>DAUER</Text>
+          </Label>
+          <SliderComposed>
+            <Tooltip>Dauer der FADE-Überblendung: 0 bis 20 Sekunden. Bei laufendem Automix gilt die Dauer aus Archiv → Auto DJ.</Tooltip>
+            <Size>0me,24f</Size>
+            <Slider scalemode="STRETCH">skin:graphics/xfader_track.svg</Slider>
+            <Handle scalemode="STRETCH_ASPECT">skin:graphics/xfader_handle.svg</Handle>
+            <Horizontal>true</Horizontal>
+            <Connection><ConfigKey>[Skin],twindeck_fade_time</ConfigKey></Connection>
+            <!-- bei laufendem Automix gilt die Dauer aus Auto DJ -->
+            <Connection>
+              <ConfigKey>[AutoDJ],enabled</ConfigKey>
+              <BindProperty>enabled</BindProperty>
+              <Transform><Not/></Transform>
+            </Connection>
+          </SliderComposed>
+          <!-- Anzeige: Sekunden, bei laufendem Automix "AUTO DJ" -->
+          <WidgetGroup>
+            <Size>58f,28f</Size>
+            <Layout>horizontal</Layout>
+            <Children>
+              <WidgetGroup>
+                <Size>58f,28f</Size>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <WidgetGroup><SizePolicy>me,f</SizePolicy></WidgetGroup>
+                  <Number>
+                    <ObjectName>FadeSeconds</ObjectName>
+                    <Tooltip>Dauer der FADE-Überblendung in Sekunden</Tooltip>
+                    <Size>26f,28f</Size>
+                    <NumberOfDigits>0</NumberOfDigits>
+                    <Alignment>right</Alignment>
+                    <Connection><ConfigKey>[Skin],twindeck_fade_seconds</ConfigKey></Connection>
+                  </Number>
+                  <Label>
+                    <ObjectName>FadeSecondsUnit</ObjectName>
+                    <Size>14f,28f</Size>
+                    <Text>s</Text>
+                  </Label>
+                </Children>
+                <Connection>
+                  <ConfigKey>[AutoDJ],enabled</ConfigKey>
+                  <BindProperty>visible</BindProperty>
+                  <Transform><Not/></Transform>
+                </Connection>
+              </WidgetGroup>
+              <Label>
+                <ObjectName>FadeAutoDj</ObjectName>
+                <Tooltip>Automix läuft: Es gilt die Dauer aus Archiv → Auto DJ</Tooltip>
+                <Size>58f,28f</Size>
+                <Text>AUTO DJ</Text>
+                <Connection>
+                  <ConfigKey>[AutoDJ],enabled</ConfigKey>
+                  <BindProperty>visible</BindProperty>
+                </Connection>
+              </Label>
+            </Children>
+          </WidgetGroup>
+        </Children>
+        <Connection>
+          <ConfigKey>[Skin],twindeck_helper_active</ConfigKey>
+          <BindProperty>visible</BindProperty>
+        </Connection>
+      </WidgetGroup>
+
       <!-- Automix -->
       <WidgetGroup>
         <ObjectName>AutomixBox</ObjectName>
@@ -229,24 +303,61 @@
               <ButtonState>LeftButton</ButtonState>
             </Connection>
           </PushButton>
-          <PushButton>
-            <ObjectName>MixerButton</ObjectName>
-            <Tooltip>Jetzt sofort zum nächsten Titel überblenden (nur bei laufendem Automix)</Tooltip>
+          <!-- FADE: ohne Helfer Auto-DJ-Fade, mit Helfer eigene Überblendung mit Dauer -->
+          <WidgetGroup>
+            <SizePolicy>me,f</SizePolicy>
             <Size>0me,28f</Size>
-            <NumberStates>1</NumberStates>
-            <State><Number>0</Number><Text>FADE</Text></State>
+            <Layout>horizontal</Layout>
+            <Children>
+              <PushButton>
+                <ObjectName>MixerButton</ObjectName>
+                <Tooltip>Jetzt sofort zum nächsten Titel überblenden (nur bei laufendem Automix)</Tooltip>
+                <Size>0me,28f</Size>
+                <NumberStates>1</NumberStates>
+                <State><Number>0</Number><Text>FADE</Text></State>
+                <Connection>
+                  <ConfigKey>[AutoDJ],fade_now</ConfigKey>
+                  <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+                  <ButtonState>LeftButton</ButtonState>
+                  <ConnectValueToWidget>false</ConnectValueToWidget>
+                </Connection>
+                <!-- nur bedienbar, wenn Automix läuft -->
+                <Connection>
+                  <ConfigKey>[AutoDJ],enabled</ConfigKey>
+                  <BindProperty>enabled</BindProperty>
+                </Connection>
+              </PushButton>
+            </Children>
             <Connection>
-              <ConfigKey>[AutoDJ],fade_now</ConfigKey>
-              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
-              <ButtonState>LeftButton</ButtonState>
-              <ConnectValueToWidget>false</ConnectValueToWidget>
+              <ConfigKey>[Skin],twindeck_helper_active</ConfigKey>
+              <BindProperty>visible</BindProperty>
+              <Transform><Not/></Transform>
             </Connection>
-            <!-- nur bedienbar, wenn Automix läuft -->
+          </WidgetGroup>
+          <WidgetGroup>
+            <SizePolicy>me,f</SizePolicy>
+            <Size>0me,28f</Size>
+            <Layout>horizontal</Layout>
+            <Children>
+              <PushButton>
+                <ObjectName>MixerButton</ObjectName>
+                <Tooltip>FADE – blendet in der eingestellten Dauer zum anderen Player über (Form wie unter ÜBERGANG gewählt). Bei laufendem Automix übernimmt Auto DJ die Überblendung.</Tooltip>
+                <Size>0me,28f</Size>
+                <NumberStates>1</NumberStates>
+                <State><Number>0</Number><Text>FADE</Text></State>
+                <Connection>
+                  <ConfigKey>[Skin],twindeck_fade</ConfigKey>
+                  <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+                  <ButtonState>LeftButton</ButtonState>
+                  <ConnectValueToWidget>false</ConnectValueToWidget>
+                </Connection>
+              </PushButton>
+            </Children>
             <Connection>
-              <ConfigKey>[AutoDJ],enabled</ConfigKey>
-              <BindProperty>enabled</BindProperty>
+              <ConfigKey>[Skin],twindeck_helper_active</ConfigKey>
+              <BindProperty>visible</BindProperty>
             </Connection>
-          </PushButton>
+          </WidgetGroup>
           <PushButton>
             <ObjectName>MixerButton</ObjectName>
             <Tooltip>Nächsten Titel in der Warteschlange überspringen (nur bei laufendem Automix)</Tooltip>
