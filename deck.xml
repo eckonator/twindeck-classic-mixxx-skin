@@ -513,7 +513,7 @@
           <PushButton>
             <ObjectName>CueButton</ObjectName>
             <TooltipId>cue_default_cue_gotoandstop</TooltipId>
-            <Size>54f,32f</Size>
+            <Size>46f,32f</Size>
             <NumberStates>2</NumberStates>
             <State><Number>0</Number><Text>CUE</Text></State>
             <State><Number>1</Number><Text>CUE</Text></State>
@@ -537,17 +537,17 @@
 
           <!-- Play: ohne Helfer direkt, mit Helfer mit sanftem Anlauf / Plattenbremse -->
           <WidgetGroup>
-            <Size>70f,32f</Size>
+            <Size>60f,32f</Size>
             <Layout>horizontal</Layout>
             <Children>
               <WidgetGroup>
-                <Size>70f,32f</Size>
+                <Size>60f,32f</Size>
                 <Layout>horizontal</Layout>
                 <Children>
                   <PushButton>
                     <ObjectName>PlayButton</ObjectName>
                     <TooltipId>play_cue_set</TooltipId>
-                    <Size>70f,32f</Size>
+                    <Size>60f,32f</Size>
                     <NumberStates>2</NumberStates>
                     <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_play_off.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_play_off.svg</Pressed></State>
                     <State><Number>1</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_play_on.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_play_on.svg</Pressed></State>
@@ -575,13 +575,13 @@
                 </Connection>
               </WidgetGroup>
               <WidgetGroup>
-                <Size>70f,32f</Size>
+                <Size>60f,32f</Size>
                 <Layout>horizontal</Layout>
                 <Children>
                   <PushButton>
                     <ObjectName>PlayButton</ObjectName>
                     <Tooltip>Play/Pause – läuft wie ein Plattenspieler langsam an bzw. bremst ab. Rechtsklick: Cue-Punkt setzen</Tooltip>
-                    <Size>70f,32f</Size>
+                    <Size>60f,32f</Size>
                     <NumberStates>2</NumberStates>
                     <!-- Taster statt Umschalter: jeder Klick sendet 1 (drücken) und 0 (loslassen),
                          sonst würde nur jeder zweite Klick beim Helfer ankommen -->
@@ -616,17 +616,17 @@
 
           <!-- Stopp: ohne Helfer sofort zum Anfang, mit Helfer Plattenbremse -->
           <WidgetGroup>
-            <Size>46f,32f</Size>
+            <Size>40f,32f</Size>
             <Layout>horizontal</Layout>
             <Children>
               <WidgetGroup>
-                <Size>46f,32f</Size>
+                <Size>40f,32f</Size>
                 <Layout>horizontal</Layout>
                 <Children>
                   <PushButton>
                     <ObjectName>StopButton</ObjectName>
                     <Tooltip>Stopp – hält an und springt zum Anfang</Tooltip>
-                    <Size>46f,32f</Size>
+                    <Size>40f,32f</Size>
                     <NumberStates>1</NumberStates>
                     <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_stop.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_stop.svg</Pressed></State>
                     <Connection>
@@ -643,13 +643,13 @@
                 </Connection>
               </WidgetGroup>
               <WidgetGroup>
-                <Size>46f,32f</Size>
+                <Size>40f,32f</Size>
                 <Layout>horizontal</Layout>
                 <Children>
                   <PushButton>
                     <ObjectName>StopButton</ObjectName>
                     <Tooltip>Stopp – bremst wie ein Plattenspieler ab und bleibt an der Stelle stehen. Steht der Titel bereits: zurück zum Anfang</Tooltip>
-                    <Size>46f,32f</Size>
+                    <Size>40f,32f</Size>
                     <NumberStates>1</NumberStates>
                     <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_stop.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_stop.svg</Pressed></State>
                     <Connection>
@@ -667,12 +667,108 @@
             </Children>
           </WidgetGroup>
 
-          <WidgetGroup><Size>8f,1f</Size></WidgetGroup>
+          <!-- Zurück: mit Helfer erst zum Titelanfang, steht er dort, den vorigen Titel
+               der Liste laden; ohne Helfer Links = Titelanfang, Rechts = voriger Titel -->
+          <WidgetGroup>
+            <Size>34f,32f</Size>
+            <Layout>horizontal</Layout>
+            <Children>
+              <WidgetGroup>
+                <Size>34f,32f</Size>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <PushButton>
+                    <ObjectName>PrevButton</ObjectName>
+                    <Tooltip>Zurück – springt zum Titelanfang. Rechtsklick: vorigen Titel der Liste laden</Tooltip>
+                    <Size>34f,32f</Size>
+                    <NumberStates>1</NumberStates>
+                    <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_prev.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_prev.svg</Pressed></State>
+                    <Connection>
+                      <ConfigKey><Variable name="group"/>,start</ConfigKey>
+                      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+                      <ButtonState>LeftButton</ButtonState>
+                    </Connection>
+                    <Connection>
+                      <ConfigKey>[Playlist],SelectPrevTrack</ConfigKey>
+                      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+                      <ButtonState>RightButton</ButtonState>
+                    </Connection>
+                    <Connection>
+                      <ConfigKey><Variable name="group"/>,LoadSelectedTrack</ConfigKey>
+                      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+                      <ButtonState>RightButton</ButtonState>
+                    </Connection>
+                  </PushButton>
+                </Children>
+                <Connection>
+                  <ConfigKey>[Skin],twindeck_helper_active</ConfigKey>
+                  <BindProperty>visible</BindProperty>
+                  <Transform><Not/></Transform>
+                </Connection>
+              </WidgetGroup>
+              <WidgetGroup>
+                <Size>34f,32f</Size>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <PushButton>
+                    <ObjectName>PrevButton</ObjectName>
+                    <Tooltip>Zurück – springt zum Titelanfang; steht der Titel schon am Anfang, wird der vorige Titel der Liste geladen</Tooltip>
+                    <Size>34f,32f</Size>
+                    <NumberStates>1</NumberStates>
+                    <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_prev.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_prev.svg</Pressed></State>
+                    <Connection>
+                      <ConfigKey>[Skin],twindeck_prev_<Variable name="channum"/></ConfigKey>
+                      <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+                      <ButtonState>LeftButton</ButtonState>
+                    </Connection>
+                  </PushButton>
+                </Children>
+                <Connection>
+                  <ConfigKey>[Skin],twindeck_helper_active</ConfigKey>
+                  <BindProperty>visible</BindProperty>
+                </Connection>
+              </WidgetGroup>
+            </Children>
+          </WidgetGroup>
+
+          <!-- Vor: nächsten Titel der Liste laden (Auswahl eine Zeile weiter, dann laden) -->
+          <PushButton>
+            <ObjectName>NextButton</ObjectName>
+            <Tooltip>Vor – nächsten Titel der Liste laden</Tooltip>
+            <Size>34f,32f</Size>
+            <NumberStates>1</NumberStates>
+            <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_next.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_next.svg</Pressed></State>
+            <Connection>
+              <ConfigKey>[Playlist],SelectNextTrack</ConfigKey>
+              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+              <ButtonState>LeftButton</ButtonState>
+            </Connection>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,LoadSelectedTrack</ConfigKey>
+              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+              <ButtonState>LeftButton</ButtonState>
+            </Connection>
+          </PushButton>
+
+          <PushButton>
+            <ObjectName>RepeatButton</ObjectName>
+            <Tooltip>Repeat – am Titelende wieder von vorn beginnen</Tooltip>
+            <Size>38f,32f</Size>
+            <NumberStates>2</NumberStates>
+            <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_repeat_off.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_repeat_off.svg</Pressed></State>
+            <State><Number>1</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_repeat_on.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_repeat_on.svg</Pressed></State>
+            <Connection>
+              <ConfigKey><Variable name="group"/>,repeat</ConfigKey>
+              <ButtonState>LeftButton</ButtonState>
+            </Connection>
+          </PushButton>
+
+          <WidgetGroup><Size>4f,1f</Size></WidgetGroup>
 
           <Template src="skin:btn_toggle.xml">
             <SetVariable name="ObjectName">SyncButton</SetVariable>
             <SetVariable name="Tooltip">Sync – Tempo und Takt an den anderen Player angleichen</SetVariable>
-            <SetVariable name="Size">50f,32f</SetVariable>
+            <SetVariable name="Size">44f,32f</SetVariable>
             <SetVariable name="Text">SYNC</SetVariable>
             <SetVariable name="ConfigKey"><Variable name="group"/>,sync_enabled</SetVariable>
           </Template>
@@ -680,7 +776,7 @@
           <Template src="skin:btn_push.xml">
             <SetVariable name="ObjectName">DeckButton</SetVariable>
             <SetVariable name="Tooltip">Tap – BPM im Takt mittippen</SetVariable>
-            <SetVariable name="Size">44f,32f</SetVariable>
+            <SetVariable name="Size">40f,32f</SetVariable>
             <SetVariable name="Text">TAP</SetVariable>
             <SetVariable name="ConfigKey"><Variable name="group"/>,bpm_tap</SetVariable>
           </Template>
@@ -688,7 +784,7 @@
           <Template src="skin:btn_toggle.xml">
             <SetVariable name="ObjectName">DeckToggle</SetVariable>
             <SetVariable name="Tooltip">Master Tempo – Tonhöhe beim Pitchen beibehalten</SetVariable>
-            <SetVariable name="Size">50f,32f</SetVariable>
+            <SetVariable name="Size">42f,32f</SetVariable>
             <SetVariable name="Text">M.T.</SetVariable>
             <SetVariable name="ConfigKey"><Variable name="group"/>,keylock</SetVariable>
           </Template>
@@ -698,7 +794,7 @@
           <Template src="skin:btn_toggle.xml">
             <SetVariable name="ObjectName">PflButton</SetVariable>
             <SetVariable name="Tooltip">Vorhören über Kopfhörer</SetVariable>
-            <SetVariable name="Size">58f,32f</SetVariable>
+            <SetVariable name="Size">52f,32f</SetVariable>
             <SetVariable name="Text">🎧 PFL</SetVariable>
             <SetVariable name="ConfigKey"><Variable name="group"/>,pfl</SetVariable>
           </Template>

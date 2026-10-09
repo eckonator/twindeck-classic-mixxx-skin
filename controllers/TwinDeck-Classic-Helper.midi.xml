@@ -10,7 +10,7 @@
   <info>
     <name>TwinDeck Classic Helper</name>
     <author>TwinDeck Classic</author>
-    <description>Ergänzt den Skin TwinDeck Classic: Plattenbremse bei Stopp/Pause, sanfter Anlauf bei Play und FADE mit einstellbarer Dauer. Auf ein virtuelles MIDI-Gerät legen (IAC-Treiber, loopMIDI, Midi Through).</description>
+    <description>Ergänzt den Skin TwinDeck Classic: Plattenbremse bei Stopp/Pause, sanfter Anlauf bei Play, FADE mit einstellbarer Dauer und Zurück-Taste (erst Titelanfang, dann voriger Titel). Auf ein virtuelles MIDI-Gerät legen (IAC-Treiber, loopMIDI, Midi Through).</description>
   </info>
   <controller id="TwinDeckHelper">
     <scriptfiles>

@@ -27,6 +27,8 @@
       <attribute persist="false" config_key="[Skin],twindeck_play_2">0</attribute>
       <attribute persist="false" config_key="[Skin],twindeck_stop_1">0</attribute>
       <attribute persist="false" config_key="[Skin],twindeck_stop_2">0</attribute>
+      <attribute persist="false" config_key="[Skin],twindeck_prev_1">0</attribute>
+      <attribute persist="false" config_key="[Skin],twindeck_prev_2">0</attribute>
       <attribute persist="false" config_key="[Skin],twindeck_fade">0</attribute>
       <attribute persist="true" config_key="[Skin],twindeck_fade_time">0.4</attribute>
       <attribute persist="false" config_key="[Skin],twindeck_fade_seconds">8</attribute>

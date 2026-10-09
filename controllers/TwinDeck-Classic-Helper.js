@@ -5,6 +5,7 @@
 //   - Pause/Stopp bremst den Titel wie einen Plattenspieler ab (engine.brake)
 //   - Play lässt ihn langsam anlaufen (engine.softStart)
 //   - FADE blendet mit der im Skin eingestellten Dauer (0–20 s) zum anderen Player
+//   - Zurück springt erst zum Titelanfang und lädt erst dann den vorigen Titel
 //
 // Der Skin zeigt die Tasten dieses Helfers nur an, solange
 // [Skin],twindeck_helper_active = 1 ist. Ohne Helfer verhalten sich die
@@ -18,6 +19,8 @@ TwinDeckHelper.BRAKE_FACTOR = 12;
 TwinDeckHelper.START_FACTOR = 12;
 TwinDeckHelper.FADE_MAX_SECONDS = 20;
 TwinDeckHelper.FADE_STEP_MS = 20;
+// Bis zu dieser Position (Sekunden) gilt ein stehender Titel als "am Anfang"
+TwinDeckHelper.PREV_AT_START_SECONDS = 0.5;
 
 TwinDeckHelper.connections = [];
 TwinDeckHelper.braking = [false, false, false];
@@ -77,6 +80,11 @@ TwinDeckHelper.connect = function() {
                 TwinDeckHelper.onStop(deck);
             }
         }));
+        conns.push(engine.makeConnection("[Skin]", "twindeck_prev_" + deck, function(value) {
+            if (value > 0) {
+                TwinDeckHelper.onPrev(deck);
+            }
+        }));
         // Bremse ist fertig, sobald Mixxx das Deck anhält
         conns.push(engine.makeConnection(TwinDeckHelper.group(deck), "play", function(value) {
             if (value === 0) {
@@ -121,6 +129,27 @@ TwinDeckHelper.onStop = function(deck) {
     } else if (engine.getValue(group, "play") === 0) {
         engine.setValue(group, "start_stop", 1);
         engine.setValue(group, "start_stop", 0);
+    }
+};
+
+TwinDeckHelper.press = function(group, key) {
+    engine.setValue(group, key, 1);
+    engine.setValue(group, key, 0);
+};
+
+// |◀◀: läuft der Titel oder steht er mitten drin -> zum Titelanfang,
+//      steht er schon am Anfang (oder ist der Player leer) -> vorigen Titel der
+//      Liste laden. Einen laufenden Player lässt Mixxx in der Grundeinstellung
+//      nicht neu beladen, deshalb dort immer nur zum Anfang.
+TwinDeckHelper.onPrev = function(deck) {
+    var group = TwinDeckHelper.group(deck);
+    var seconds = engine.getValue(group, "playposition") * engine.getValue(group, "duration");
+    if (engine.getValue(group, "play") > 0 ||
+            seconds > TwinDeckHelper.PREV_AT_START_SECONDS) {
+        TwinDeckHelper.press(group, "start");
+    } else {
+        TwinDeckHelper.press("[Playlist]", "SelectPrevTrack");
+        TwinDeckHelper.press(group, "LoadSelectedTrack");
     }
 };
 
