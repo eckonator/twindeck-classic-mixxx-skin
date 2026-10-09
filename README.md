@@ -15,8 +15,8 @@ no four decks: just what you actually need to play a set.
 - Track overview (click to jump) and scrolling waveform
 - Spinning vinyl
 - CUE, play/pause, stop, SYNC, TAP, master tempo (keylock), pre-listen (PFL), eject
-- Previous / next (**|◀◀ ▶▶|**) like a CD player: **▶▶|** loads the next track of the library list;
-  **|◀◀** jumps to the start of the track, right-click loads the previous track
+- Previous (**|◀◀**): jumps to the start of the track, right-click loads the previous track of the
+  library list (loading needs a stopped player; with the helper it works like on a CD player, see below)
 - Repeat: the track starts over when it reaches the end
 - 4 hot cues (left-click sets or jumps, right-click clears)
 - Loop IN / OUT / 4 beats / EXIT
@@ -77,9 +77,9 @@ controller scripts. The optional **TwinDeck Classic Helper** is such a script. I
 - **▶ ❚❚** brakes the track like a turntable being switched off (it stays at that position) and
   spins it up softly when you press play again
 - **■** brakes the track as well; pressing it while stopped jumps back to the start
-- **|◀◀** works like on a CD player: the first press jumps to the start of the track, pressing it
-  again at the start loads the previous track of the library list (a playing track always just
-  restarts, since Mixxx by default does not load into a playing deck)
+- **|◀◀** works like on a CD player: it jumps to the start of the track; pressing it at the start
+  (or within the first 3 seconds of playback) loads the previous track of the library list. If the
+  player was playing, the previous track starts right away.
 - **FADE** cross-fades to the other player within the time set by the new **DAUER** (duration) slider
   (0–20 s), using the selected transition shape. While automix is running, Auto DJ handles the fade.
 

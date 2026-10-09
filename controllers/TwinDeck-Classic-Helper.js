@@ -5,7 +5,8 @@
 //   - Pause/Stopp bremst den Titel wie einen Plattenspieler ab (engine.brake)
 //   - Play lässt ihn langsam anlaufen (engine.softStart)
 //   - FADE blendet mit der im Skin eingestellten Dauer (0–20 s) zum anderen Player
-//   - Zurück springt erst zum Titelanfang und lädt erst dann den vorigen Titel
+//   - Zurück wie beim CD-Player: springt erst zum Titelanfang, dann zum
+//     vorigen Titel; lief der Player, spielt der vorige Titel gleich weiter
 //
 // Der Skin zeigt die Tasten dieses Helfers nur an, solange
 // [Skin],twindeck_helper_active = 1 ist. Ohne Helfer verhalten sich die
@@ -19,8 +20,10 @@ TwinDeckHelper.BRAKE_FACTOR = 12;
 TwinDeckHelper.START_FACTOR = 12;
 TwinDeckHelper.FADE_MAX_SECONDS = 20;
 TwinDeckHelper.FADE_STEP_MS = 20;
-// Bis zu dieser Position (Sekunden) gilt ein stehender Titel als "am Anfang"
+// Bis zu dieser Position (Sekunden) gilt ein Titel als "am Anfang", d. h.
+// Zurück lädt den vorigen Titel statt zum Anfang zu springen
 TwinDeckHelper.PREV_AT_START_SECONDS = 0.5;
+TwinDeckHelper.PREV_AT_START_PLAYING_SECONDS = 3;
 
 TwinDeckHelper.connections = [];
 TwinDeckHelper.braking = [false, false, false];
@@ -137,19 +140,33 @@ TwinDeckHelper.press = function(group, key) {
     engine.setValue(group, key, 0);
 };
 
-// |◀◀: läuft der Titel oder steht er mitten drin -> zum Titelanfang,
-//      steht er schon am Anfang (oder ist der Player leer) -> vorigen Titel der
-//      Liste laden. Einen laufenden Player lässt Mixxx in der Grundeinstellung
-//      nicht neu beladen, deshalb dort immer nur zum Anfang.
+// Wählt in der Titelliste den vorigen Titel und lädt ihn. Lief der Player,
+// wird er vorher angehalten (Mixxx lädt in der Grundeinstellung nicht in einen
+// laufenden Player) und der neue Titel startet.
+TwinDeckHelper.loadPrevious = function(deck) {
+    var group = TwinDeckHelper.group(deck);
+    var wasPlaying = engine.getValue(group, "play") > 0;
+    if (wasPlaying) {
+        TwinDeckHelper.braking[deck] = false;
+        engine.setValue(group, "play", 0);
+    }
+    TwinDeckHelper.press("[Playlist]", "SelectPrevTrack");
+    TwinDeckHelper.press(group, wasPlaying ? "LoadSelectedTrackAndPlay" : "LoadSelectedTrack");
+};
+
+// |◀◀: Titel schon (fast) am Anfang -> vorigen Titel der Liste laden,
+//      sonst zum Titelanfang springen. Während der Wiedergabe zählen die
+//      ersten Sekunden noch als Anfang, damit zweimal Drücken zurückschaltet.
 TwinDeckHelper.onPrev = function(deck) {
     var group = TwinDeckHelper.group(deck);
     var seconds = engine.getValue(group, "playposition") * engine.getValue(group, "duration");
-    if (engine.getValue(group, "play") > 0 ||
-            seconds > TwinDeckHelper.PREV_AT_START_SECONDS) {
+    var atStart = engine.getValue(group, "play") > 0
+        ? TwinDeckHelper.PREV_AT_START_PLAYING_SECONDS
+        : TwinDeckHelper.PREV_AT_START_SECONDS;
+    if (seconds > atStart) {
         TwinDeckHelper.press(group, "start");
     } else {
-        TwinDeckHelper.press("[Playlist]", "SelectPrevTrack");
-        TwinDeckHelper.press(group, "LoadSelectedTrack");
+        TwinDeckHelper.loadPrevious(deck);
     }
 };
 

@@ -679,7 +679,7 @@
                 <Children>
                   <PushButton>
                     <ObjectName>PrevButton</ObjectName>
-                    <Tooltip>Zurück – springt zum Titelanfang. Rechtsklick: vorigen Titel der Liste laden</Tooltip>
+                    <Tooltip>Zurück – springt zum Titelanfang. Rechtsklick: vorigen Titel der Liste laden (nur bei angehaltenem Player)</Tooltip>
                     <Size>34f,32f</Size>
                     <NumberStates>1</NumberStates>
                     <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_prev.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_prev.svg</Pressed></State>
@@ -712,7 +712,7 @@
                 <Children>
                   <PushButton>
                     <ObjectName>PrevButton</ObjectName>
-                    <Tooltip>Zurück – springt zum Titelanfang; steht der Titel schon am Anfang, wird der vorige Titel der Liste geladen</Tooltip>
+                    <Tooltip>Zurück – springt zum Titelanfang; am Anfang (bzw. in den ersten 3 Sekunden der Wiedergabe) wird der vorige Titel der Liste geladen</Tooltip>
                     <Size>34f,32f</Size>
                     <NumberStates>1</NumberStates>
                     <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_prev.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_prev.svg</Pressed></State>
@@ -730,25 +730,6 @@
               </WidgetGroup>
             </Children>
           </WidgetGroup>
-
-          <!-- Vor: nächsten Titel der Liste laden (Auswahl eine Zeile weiter, dann laden) -->
-          <PushButton>
-            <ObjectName>NextButton</ObjectName>
-            <Tooltip>Vor – nächsten Titel der Liste laden</Tooltip>
-            <Size>34f,32f</Size>
-            <NumberStates>1</NumberStates>
-            <State><Number>0</Number><Unpressed scalemode="STRETCH">skin:graphics/btn_next.svg</Unpressed><Pressed scalemode="STRETCH">skin:graphics/btn_next.svg</Pressed></State>
-            <Connection>
-              <ConfigKey>[Playlist],SelectNextTrack</ConfigKey>
-              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
-              <ButtonState>LeftButton</ButtonState>
-            </Connection>
-            <Connection>
-              <ConfigKey><Variable name="group"/>,LoadSelectedTrack</ConfigKey>
-              <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
-              <ButtonState>LeftButton</ButtonState>
-            </Connection>
-          </PushButton>
 
           <PushButton>
             <ObjectName>RepeatButton</ObjectName>
